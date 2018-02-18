@@ -1,0 +1,20 @@
+QMAKE_CXX.INCDIRS = \
+    /home/abc/Android/android-ndk-r16b/sysroot/usr/include/i686-linux-android \
+    /home/abc/Android/android-ndk-r16b/sources/cxx-stl/gnu-libstdc++/4.9/include \
+    /home/abc/Android/android-ndk-r16b/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include \
+    /home/abc/Android/android-ndk-r16b/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/include \
+    /home/abc/Android/android-ndk-r16b/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/include-fixed \
+    /home/abc/Android/android-ndk-r16b/sysroot/usr/include
+QMAKE_CXX.LIBDIRS = \
+    /home/abc/Android/android-ndk-r16b/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x \
+    /home/abc/Android/android-ndk-r16b/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc \
+    /home/abc/Android/android-ndk-r16b/toolchains/x86-4.9/prebuilt/linux-x86_64/i686-linux-android/lib
+QMAKE_CXX.QT_COMPILER_STDCXX = 199711L
+QMAKE_CXX.QMAKE_GCC_MAJOR_VERSION = 4
+QMAKE_CXX.QMAKE_GCC_MINOR_VERSION = 9
+QMAKE_CXX.QMAKE_GCC_PATCH_VERSION = 0
+QMAKE_CXX.COMPILER_MACROS = \
+    QT_COMPILER_STDCXX \
+    QMAKE_GCC_MAJOR_VERSION \
+    QMAKE_GCC_MINOR_VERSION \
+    QMAKE_GCC_PATCH_VERSION
