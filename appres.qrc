@@ -26,7 +26,6 @@
         <file>pics/view_report.png</file>
         <file>pics/logo_3.png</file>
         <file>pics/original/settings1_ico.png</file>
-        <file>ui/qml/test.qml</file>
         <file>ui/qml/Catalog/Delegate.qml</file>
         <file>ui/qml/Catalog/CatalogView.qml</file>
         <file>ui/qml/Catalog/Header.qml</file>
@@ -35,5 +34,6 @@
         <file>ui/qml/components/SettingPanel.qml</file>
         <file>../newui/newui.pro.user</file>
         <file>ui/art/cogwheel.png</file>
+        <file>ui/qml/components/DoubleEdit.qml</file>
     </qresource>
 </RCC>

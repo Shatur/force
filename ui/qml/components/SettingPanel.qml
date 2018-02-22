@@ -1,41 +1,40 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 
 
 Item {
     property bool onoff: false
     id: switchMenu
-    anchors.fill: parent
+    width: parent.width
+    height: 100
+    anchors.left: parent.left
+    anchors.leftMargin:  1
+    anchors.bottom: parent.bottom
+    anchors.bottomMargin: 1
 
-    onYChanged: {
-        console.log(y)
-        list.height = y
-    }
 
     Item{
         id: switchMenuButton
         z:2
-        width: fontSize*2.5
-        height: fontSize*2.5
-        anchors.left: parent.left
-        anchors.leftMargin:  1
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 1
+        width: 100
+        height: 100
+
         Rectangle{
-            color: onoff?colorFour:colorThree
+            color: colorThree
             anchors.fill: parent
             //opacity: 0.3
             radius: onoff? 0: 5
         }
 
         Image {
-            id: name
+            id: imageSwitchMenuButton
             height: parent.height*0.8
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             width: parent.width*0.8
-
             source: "qrc:/ui/art/cogwheel.png"
+
         }
         MouseArea {
             id: mouseArea
@@ -45,42 +44,49 @@ Item {
                 //toolsLine.enabled = onoff
                 //toolsLine.visible = onoff
                 showHideToolsLine.start()
+                rotationAnimation.start()
             }
         }
     }
 
-    Row{
+    RowLayout{
         id: toolsLine
-        x: -parent.width -1
+        x: parent.width -1
         y: switchMenuButton.y
-        height: fontSize*2.5
-        width: parent.width
+
+        width: parent.width-switchMenuButton.width-2
         spacing: 0
         Repeater{
             id: idSettingButtonModel
             model: settingButtonsModel
             Rectangle {
-                height: parent.height
-                width: (parent.width-switchMenuButton.width-4-(toolsLine.spacing*(idSettingButtonModel.count-1))-(toolsLine.spacing*2))/idSettingButtonModel.count
+                height: 100
+                width: (toolsLine.width-switchMenuButton.width)/idSettingButtonModel.count
                 color: colorThree
+                Layout.fillWidth: true
 
 
                 Text{
                     anchors.fill: parent
-                    text: model.text
+                    text:  model.text
                     color: colorOne
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: textFactor(model.text)
                 }
                 MouseArea{
                     anchors.fill:parent
                     onClicked: {
                         clickedCurent(index)
                     }
-
-                    onPressed:  {
-                        parent.color = colorFour
+                    onPressed: {
+                        parent.width = parent.width + 5
+                        parent.height = parent.height +5
+                    }
+                    onReleased:  {
+                        parent.width = parent.width - 5
+                        parent.height = parent.height - 5
                     }
                 }
             }
@@ -99,9 +105,24 @@ Item {
 
         }
     }
+    RotationAnimator {
+        id: rotationAnimation
+        target: imageSwitchMenuButton;
+        from: 0;
+        to: 360;
+        duration: 350
+    }
 
     function clickedCurent(index){
-        console.log(index)
+        if (index === 0)
+            keyboardType ="decimal"
+        if (index === 1)
+            keyboardType ="literal"
+        if (index === 2)
+            fontSize = fontSize-1
+        if (index === 3)
+            fontSize = fontSize+1
+        console.log(keyboardType)
     }
 
     ListModel{
@@ -111,5 +132,17 @@ Item {
         ListElement{text:"Ромір шрифту менше";source:""}
         ListElement{text:"Розмір шрифту більше";source:""}
         //ListElement{text:"5";source:""}
+    }
+
+    function textFactor(text){
+        var l
+
+        l = text.length
+        l = fontSize*(1/l)
+        console.log(text,l)
+        if (l>1)
+            return fontSize
+        else
+            return fontSize*(l+(l/2))
     }
 }

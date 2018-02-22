@@ -105,7 +105,7 @@ Item {
         x:-2
         height: 3
         width: parent.width+2
-        color: colorFour
+        color: colorThree
 
     }
     }

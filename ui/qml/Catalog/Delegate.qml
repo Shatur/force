@@ -4,13 +4,17 @@ import "../components"
 
 Item {
 
-    property int indexItem: model.index;
+    property int indexItem: model.index
+
     property real wd:parent.width-2
     property real hg
     property bool rdOnly: false
 
     property variant placeHolderList: modelCatalog.getLegendListReport()
     signal onChange(int index, string value);
+    signal fieldTextEdited(variant text)
+
+
 
 
     id: thisRootItem
@@ -18,11 +22,20 @@ Item {
     y:1
 
     width: parent.width-2
-    height: (fontSize*8)
+    height: (fontSize*15)
+    //height: width*0.38
     Rectangle{
         id: backRect
         color:colorOne
         anchors.fill: parent
+
+        MouseArea{
+            anchors.fill: parent
+            z:4
+            onClicked: {
+                indexCurrentItem = indexItem
+            }
+        }
     }
 
     Column{
@@ -32,23 +45,33 @@ Item {
         //padding: 2
 
         Item{//line 1
+            id: lineOne
             height: (parent.height-(mainColumn.spacing*2)-(mainColumn.padding*2))/3
             width: parent.width-(parent.padding*2)
 
             Rectangle {
-                height: 1
+                height: (indexItem === indexCurrentItem)?3:1
                 width: parent.width
-                color: colorTwo
+                color: (indexItem === indexCurrentItem)?colorThree:colorTwo
                 anchors.bottom: parent.bottom
             }
             Text{
                 color: colorTwo
                 font.pixelSize: fontSize
-                font.bold: true
+                font.bold: (indexItem === indexCurrentItem)?true:false
                 anchors.fill: parent
-                text: id +" "+ name
+                text: " "+id +" "+ name
                 verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
+                horizontalAlignment: (indexItem === indexCurrentItem)?Text.AlignLeft:Text.AlignLeft
+            }
+            Text{
+                color: "red"
+                font.pixelSize: fontSize*1.17
+                font.bold: true
+                anchors.right: parent.right
+                text: " !!! "
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.Center
             }
         }
 
@@ -86,7 +109,7 @@ Item {
 
         Row {//line 3
             id: line_3
-            spacing: 1
+            spacing: 2
             width: parent.width-(parent.padding*2)-(spacing*repeaterLabel.count-1)
             height: (parent.height-(mainColumn.spacing*2)-(mainColumn.padding*2))/3
             Repeater {
@@ -97,8 +120,12 @@ Item {
                     width: parent.width/repeaterEditLine.count
                     TextField {
                         id:editField
+                        focus: (indexCurrentItem === indexItem)?true:false
                         readOnly: rdOnly
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
+                        inputMethodHints: (keyboardType === "decimal")?Qt.ImhPreferNumbers:Qt.ImhNone
+                        onTextEdited:{
+                            fieldTextEdited(text)
+                        }
                         Item{
                             id:checkBox
                             height: parent.height-1
@@ -107,7 +134,6 @@ Item {
                             anchors.left: parent.left
                             enabled: t7(index)
                             visible:   t7(index)
-                            //CheckBox{z:3;anchors.fill: parent}
                             PressBox{z:3;anchors.fill: parent;anchors.bottomMargin: 1}
 
                         }
@@ -117,16 +143,15 @@ Item {
                             Rectangle{
                                 height: editField.focus?2:1
                                 width: parent.width
-                                color: editField.focus?"royalblue":colorTwo
+                                color: editField.focus ?(editField.text==="")?"red":"royalblue" :(editField.text==="")?"red":colorTwo
                                 anchors.bottom: parent.bottom
 
                             }
                         }
 
-
                         height: parent.height
                         width: parent.width
-                        color: editField.focus?"royalblue":colorTwo
+                        color: editField.focus?colorThree:colorTwo
                         horizontalAlignment: TextInput.AlignRight
                         font.pixelSize: focus?fontSize*1.25:fontSize
                         font.italic: false
@@ -139,10 +164,13 @@ Item {
                         bottomPadding: 1
                         leftPadding: 1
                         topPadding: 1
-                        onPressed: {list.height = 400}
-                        //onPressed: {list.positionViewAtIndex(indexItem, ListView.End)}
-                        //onEditingFinished: {
-                        //    modelCatalog.editReportField(indexItem,index,text)}
+                        onPressed:
+                        {
+                            indexCurrentItem = indexItem
+                        }
+                        onAccepted:  {
+                            modelCatalog.editReportField(indexItem,index,text)
+                        }
                     }
                 }
             }

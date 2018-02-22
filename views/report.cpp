@@ -85,16 +85,6 @@ bool Report::setup(int report_id, int shop_id, bool isReadOnly)
     {
         ui->catalogSelector->addItem(icon, report.catalogs[ic].catalogName);
 
-    //версія 1-----------
-//        CatalogPage* cwgt = new CatalogPage(ic,&report.catalogs[ic],
-//                                            isReadOnly,
-//                                            this);
-//        connect(this, SIGNAL(needUpdate()), cwgt, SLOT(dataUpdate()));
-//        ui->stack->addWidget(cwgt);        
-
-/*        if (!ic)
-            ui->stack->setCurrentWidget(cwgt);
-*/
         //в рамках версії 2---------
         ShiftCatalogPage* shift = new ShiftCatalogPage;//відображення
         ModelCatalog* model = new ModelCatalog;//модель
@@ -145,35 +135,7 @@ void Report::on_makeReportBtn_clicked()
     }
 
     views.start_waiting();
-    emit needUpdate();
-    //check values
-    for(int i=0; i<report.catalogs.size(); i++)
-    {//що робить ця функція???
-        int empty_cnt =0;
-        int total_cnt = 0;
-        for (int j=0; j<report.catalogs[i].reportItems.size(); j++)
-        {//перебирається каталог
-            for(int k=0; k<report.catalogs[i].reportItems[j].reportValues.size(); k++)
-            {//перебирається ітем
-                total_cnt++;//рахує загальну кількість проходів
-                if (report.catalogs[i].reportItems[j].reportValues[k].value.trimmed().length())//якщо поле пусте сбрасується цикл
-                    break;
-                else
-                    empty_cnt++;//якщо не пусте інкремент
-            }
-        }//for reportItems
-        //if ((total_cnt == empty_cnt) && empty_cnt)hot point
-        if(false)
-        {
-            QMessageBox msgBox;
-            msgBox.setText("В каталозі має бути заповнено бодай одне поле");
-            msgBox.setStandardButtons(QMessageBox::Ok);
-            msgBox.exec();
-            ui->catalogSelector->setCurrentIndex(i+1);
-            views.stop_waiting();
-            return;
-        }
-    }
+    emit needUpdate();     
 // до бази
     Fesko::API.setReport(report);
 

@@ -3,6 +3,7 @@
 void ModelCatalog::editReportField(int indexRow,int indexField, QString value)
 {   
     modelData[indexRow].reportFieldsString.replace(indexField,value);
+    qDebug()<<modelData[indexRow].reportFieldsString;
 }
 
 ModelCatalog::ModelCatalog(QObject *parent)
@@ -37,8 +38,6 @@ QVariant ModelCatalog::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
-
-QStringList lst{"123","123","123"};
     switch (role) {
     case Id:
         return QVariant(modelData.at(index.row()).localId);
@@ -179,12 +178,6 @@ void ModelCatalog::makeModel(QJsonArray &incomingArray)
         productItem.staticFields.removeFirst();
         modelData.append(productItem);
         //тут готуються дані для каталогу
-        //        qDebug()<<productItem.localId;
-        //        qDebug()<<productItem.globalId;
-        //        qDebug()<<productItem.staticFields;
-        //        qDebug()<<productItem.reportFieldsString;
-        //        qDebug()<<productItem.reportFieldsType;
-
     }
     //надання данним структури у рамках классу
 }
@@ -220,14 +213,6 @@ void ModelCatalog::rawUpdate()
     QJsonValue _name;
     QJsonArray _reportFields;
     QJsonArray _staticFields;
-
-    //    foreach (const ProductItems &item, modelData) {
-    //        _globalId = item.globalId;
-    //        _name = item.name;
-    //        _reportFields = packman::reportFieldsToJson(item.reportFieldsString,item.reportFieldsType);
-    //        _staticFields = packman::staticFieldsToJson(item.staticFields);
-    //        rootArray.append(packman::itemPack(_globalId,_name,_staticFields,_reportFields));//updating reportItems is done here
-    //    }
 }
 
 QJsonArray ModelCatalog::packman::staticFieldsToJson(QList<QString> value)
@@ -282,7 +267,7 @@ QJsonObject ModelCatalog::packman::reportFieldsToJsonShort(QList<ProductItems> *
 QJsonArray ModelCatalog::packman::itemPack(QJsonValue globalId, QJsonValue name, QJsonArray staticFields, QJsonArray reportFields)
 {
     QJsonArray rootArray;
-    QList<QJsonValue> list;//пакує ім'я
+    QList<QJsonValue> list;
     list.append(name);//пакує ім'я
     list.append(QJsonValue("static"));//пакує ім'я
     staticFields.prepend(packman::valuesListToJsonArray(list));//пакує ім'я

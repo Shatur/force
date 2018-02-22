@@ -43,7 +43,7 @@ Item {
         //    exposureMode: Camera.ExposurePortrait
         //}
 
-        flash.mode: Camera.FlashRedEyeReduction
+        flash.mode: Camera.FlashOff
 
         exposure {
                     exposureMode: Camera.ExposureAuto
