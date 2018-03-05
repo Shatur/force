@@ -19,7 +19,7 @@ _str_const ROUTE_SCRIPT="/proj/mobile/route.php";
 
 using namespace Fesko;
 
-const QString boundary = "popikih7swxAsrf456BGe4h";
+const QString boundary = "";
 
 SiteDataProvider* Fesko::site_provider()
 {
