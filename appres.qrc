@@ -38,5 +38,6 @@
         <file>ui/qml/Catalog/DelegateComponents/LineThree.qml</file>
         <file>ui/qml/Catalog/DelegateComponents/LineSecond.qml</file>
         <file>ui/qml/Catalog/DelegateComponents/LineFirst.qml</file>
+        <file>ui/qml/components/PickList.qml</file>
     </qresource>
 </RCC>

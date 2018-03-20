@@ -17,19 +17,19 @@ Item {
     signal fieldTextEdited(variant text)
 
     id: delegateRoot
-    x:3
+    x:fontSize/2
     y:1
 
-    width: parent.width-6
+    width: parent.width-fontSize
     height: (fontSize*20)
     //height: width*0.38
     Rectangle{
         id: backRect
-        color:"#ddd"
+        color: colorOne
         opacity: goodJob?0.3:1
         radius: 5
         anchors.fill: parent
-        border.color: colorThree
+        border.color: colorGreyB
 
         MouseArea{
             anchors.fill: parent
@@ -44,11 +44,38 @@ Item {
             height: fontSize/2
             width: fontSize/2
             radius: fontSize/2
-            color: goodJob?"transparent":"red"
+            color: goodJob?colorGreyA:"red"
             anchors.top: parent.top
-            anchors.right: parent.right
             anchors.topMargin: fontSize/2
-            anchors.rightMargin: fontSize/2
+            x: parent.width - fontSize
+            onColorChanged:{
+                if (goodJobRect.color == "#ff0000"){
+                    goodJobRect.x = goodJobRect.parent.width - fontSize
+                    goodJobRect.opacity = 1
+                }
+                if (goodJobRect.color == colorGreyA){
+                    goodJobAnimation_01.start()
+                    goodJobAnimation_02.start()
+                }
+            }
+
+            PropertyAnimation{
+                id: goodJobAnimation_02
+                target: goodJobRect
+                property: "x"
+                to: goodJobRect.x - fontSize*3
+                duration: 300
+            }
+            PropertyAnimation{
+                id: goodJobAnimation_01
+                target: goodJobRect
+                property: "opacity"
+                to: 0
+                duration: 300
+            }
+
+
+
         }
 
     Column{

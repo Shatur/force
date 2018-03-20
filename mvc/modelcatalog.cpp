@@ -111,9 +111,8 @@ QHash<int, QByteArray> ModelCatalog::roleNames() const
 
 bool ModelCatalog::goodJobDot(int index)
 {
-    //qDebug()<<index;
-   // qDebug()<< modelData[catalogIndex][index].reportFieldsString.contains("");
-    return !modelData[catalogIndex][index].reportFieldsString.contains("");//перевірка чи всі поля заповнені для ітему
+    return !modelData[catalogIndex][index].reportFieldsString.contains("");
+    //перевірка чи всі поля заповнені для ітему
 }
 
 void ModelCatalog::changeCatalogList()
@@ -123,6 +122,21 @@ void ModelCatalog::changeCatalogList()
     if(catalogIndex==catalogsCount)
         catalogIndex = -1;
     catalogIndex++;
+}
+
+QVariant ModelCatalog::getStackStatus()
+{
+    QString _res;
+    _res.append(QString::number(catalogIndex+1));
+    _res.append(" із ");
+    _res.append(QString::number(catalogsCount+1));
+    return QVariant(_res);
+    //робе строку з даними про розміз каталогу і індекс поточного розділу
+}
+
+QVariant ModelCatalog::getListName()
+{
+    return catalogPassport.value(catalogIndex).value("catalogName");
 }
 
 
@@ -151,7 +165,7 @@ void ModelCatalog::connections()
 
 void ModelCatalog::dataExam()
 {
-    qDebug()<<*rawData;
+
     if(rawData->isEmpty() or rawData->isNull())
         return;//перевірка на наявність даних
 
@@ -159,11 +173,10 @@ void ModelCatalog::dataExam()
     QJsonObject jsonObject = jsonDocument.object();
 
     QJsonArray jsonArray = jsonObject.value("catalogs").toArray();
-    qDebug()<<200<<jsonArray.size();
+
     int index = jsonArray.size();
 
     for (int catalogCount =0; catalogCount < jsonArray.size(); catalogCount++){
-        qDebug()<<catalogIndex<<333;
         catalogIndex = catalogCount;
 
         jsonObject = jsonArray.at(catalogIndex).toObject();
@@ -185,11 +198,10 @@ void ModelCatalog::makePasport(QJsonObject &incomingObject)
 {
     QMap<QString,QString> _map;
     _map.insert("catalogName",incomingObject["catalogName"].toString());
-    catalogPassport.insert(catalogIndex,_map);
-    _map.clear();
     _map.insert("id",incomingObject["id"].toString());
-    catalogPassport.insert(catalogIndex,_map);
 
+    catalogPassport.insert(catalogIndex,_map);
+    //фомує інформацію про розділи каталога
 }
 
 void ModelCatalog::makeModelList(QJsonArray &incomingArray)
@@ -242,10 +254,6 @@ void ModelCatalog::makeLegend(QJsonArray &incomingArray)
     legendListStatic.insert(catalogIndex,sttic);
 
     legendListReport.insert(catalogIndex, rprt);
-
-    qDebug()<<legendListStatic;
-    qDebug()<<legendFirstStatic;
-    qDebug()<<legendListReport;
     //тут готуються дані для легенди
 }
 

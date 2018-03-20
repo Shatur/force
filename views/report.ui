@@ -30,78 +30,6 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="top_frame">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>10</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">top_frame: {background-color: rgb(0, 0, 127);}</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QComboBox" name="catalogSelector">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QListView#comboListView {
-    background: rgb(80, 80, 80);
-    color: rgb(220, 220, 220);
-    min-height: 90px;
-    margin: 0 0 0 0;
-}
-QComboBox QAbstractItemViewItem {
-	min-height: 90px;
-    background-color: rgb(255, 255, 255);
-}
-background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>64</width>
-          <height>64</height>
-         </size>
-        </property>
-        <item>
-         <property name="text">
-          <string>Повідомлення</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../appres.qrc">
-           <normaloff>:/pics/original/comment_ico.png</normaloff>:/pics/original/comment_ico.png</iconset>
-         </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QStackedWidget" name="stack">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -246,8 +174,6 @@ color: rgb(255, 255, 255);</string>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../appres.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

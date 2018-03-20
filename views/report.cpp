@@ -32,12 +32,12 @@ Report::Report(QWidget *parent) :
     uiHelper.setupListWidget(ui->commentsList);
     rp = new ReportPhotos(NULL);
     views.addObserver(this);
-    ui->catalogSelector->setMaximumWidth(uiHelper.viewProperties().winWidth -10);
     is_done = false;
 }
 
 Report::~Report()
 {
+    qDebug()<<202;
     views.removeObserver(this);
     delete ui;
 }
@@ -77,41 +77,38 @@ bool Report::setup(int report_id, int shop_id, bool isReadOnly)
     Fesko::unreadComments()->flush();
 
     //Fake icon for increase combobox items height
-    int cbih = uiHelper.viewProperties().winHeight/20;
-    QPixmap pixmap(1, cbih);
-    pixmap.fill(Qt::transparent);
-    QIcon icon(pixmap);
-    ui->catalogSelector->setIconSize(QSize(1, cbih));
+//    int cbih = uiHelper.viewProperties().winHeight/20;
+//    QPixmap pixmap(1, cbih);
+//    pixmap.fill(Qt::transparent);
+//    QIcon icon(pixmap);
+//    ui->catalogSelector->setIconSize(QSize(1, cbih));
+//    ui->catalogSelector->addItem(icon,"300");
 
-    ModelCatalog* mdl = new ModelCatalog;
 
-    QQuickView* view = new QQuickView;
-    view->rootContext()->setContextProperty("modelCatalog", mdl);
-    view->setSource(QUrl("qrc:/ui/qml/Catalog/CatalogView.qml"));
-    view->show();
+ //   QQuickView* view = new QQuickView;
+ //   view->rootContext()->setContextProperty("modelCatalog", mdl);
+ //   view->setSource(QUrl("qrc:/ui/qml/Catalog/CatalogView.qml"));
+ //   view->show();
 
-//    for (int ic =0; ic<report.catalogs.size(); ic++)//треба стак із моделєй
-//    {
-//        ui->catalogSelector->addItem(icon, report.catalogs[ic].catalogName);
 
-//        //в рамках версії 2---------
-//        ShiftCatalogPage* shift = new ShiftCatalogPage;//відображення
-//        ModelCatalog* model = new ModelCatalog;//модель
-//        //model->setCatalogIndex(ic);//сопутні данні
-//        listModels.append(model);//
-//        shift->setModel(model);//посилання на модель вілправляється до відображення
-//        ui->stack->addWidget(shift);//відображення монтується у стек
-//        if (!ic)
-//            ui->stack->setCurrentWidget(shift);
-//        //--------------------------
+    ModelCatalog* _mdl = new ModelCatalog;
 
-//    }
-    ui->stack->setCurrentIndex(0);
+    ShiftCatalogPage* _shift = new ShiftCatalogPage;
+    _shift->setModel(_mdl);
+    ui->stack->addWidget(_shift);
+    ui->stack->setCurrentIndex(1);
+
     if (isReadOnly)
     {
         ui->makePhotoBtn->setVisible(false);
         ui->makeReportBtn->setVisible(false);
     }
+
+    connect(_shift,&ShiftCatalogPage::destroyed,[=]{
+        //_shift->deleteLater();//weak
+        _mdl->deleteLater();
+        qDebug()<<"dstr";
+    });
     return true;
 }
 
@@ -129,9 +126,11 @@ bool Report::onViewPop(QWidget *current, bool isKey)
                                                     QMessageBox::Yes|QMessageBox::No);
 }
 
-void Report::on_toolButton_2_clicked()
+void Report::on_toolButton_2_clicked()//back button
 {
+
     views.pop();
+    this->deleteLater();
 }
 
 
@@ -168,12 +167,6 @@ void Report::on_makePhotoBtn_clicked()
     /*CameraView* wgt = new CameraView(this);
     views.push(wgt);*/
     views.push(rp, false);
-}
-
-void Report::on_catalogSelector_activated(int index)
-{
-    qDebug()<<index;
-    ui->stack->setCurrentIndex(index);
 }
 
 void Report::on_addCommentBtn_clicked()

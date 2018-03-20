@@ -59,6 +59,8 @@ public:
 
     Q_INVOKABLE bool goodJobDot(int index);
     Q_INVOKABLE void changeCatalogList();
+    Q_INVOKABLE QVariant getStackStatus();//верта розмір каталогу і позицію розділу у ньому
+    Q_INVOKABLE QVariant getListName();//дає доступним ім'я сиску із qml
     Q_INVOKABLE QVariant getLegendListStatic() const;//надсилає в qml поля легенди
     Q_INVOKABLE QVariant getLegendListReport() const;//надсилає в qml поля легенди
     Q_INVOKABLE QVariant getLegendFirstStatic() const;//надсилає в qml поля легенди

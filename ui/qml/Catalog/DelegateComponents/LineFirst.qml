@@ -15,6 +15,7 @@ import QtQuick 2.0
             font.bold: (indexItem === indexCurrentItem)?true:false
             anchors.fill: parent
             text: ""+id +". "+ name
+            wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment:Text.AlignHCenter
         }

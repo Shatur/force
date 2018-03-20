@@ -30,13 +30,11 @@ signals:
     void needUpdate();
 
 private slots:
-    void on_toolButton_2_clicked();
+    void on_toolButton_2_clicked();//back button
 
     void on_makeReportBtn_clicked();
 
     void on_makePhotoBtn_clicked();
-
-    void on_catalogSelector_activated(int index);
 
     void on_addCommentBtn_clicked();
 

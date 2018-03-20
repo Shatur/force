@@ -9,7 +9,7 @@ Item {
     y:1
 
     width: parent.width-2
-    height: (fontSize*8)
+    height: (fontSize*5)
     Rectangle{
         id: backRect
         color:colorOne
@@ -23,23 +23,23 @@ Item {
         padding: 2
 
         Item{//line 1
-            height: (parent.height-(mainColumn.spacing*2)-(mainColumn.padding*2))/3
-            width: parent.width-(parent.padding*2)
+            height: fontSize*1.5
+            width: parent.width
 
             Rectangle {
                 height: 1
-                width: parent.width
-                color: colorTwo
+                x: fontSize*2
+                width: parent.width - (fontSize*4)
+                color: colorGreyC
                 anchors.bottom: parent.bottom
             }
             Text{
-                color: colorTwo
+                color: colorGreyA
                 font.pixelSize: fontSize
-                font.bold: true
                 anchors.fill: parent
                 text: modelCatalog.getLegendFirstStatic()
                 verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
+                horizontalAlignment: Text.AlignHCenter
             }
         }
 
@@ -48,7 +48,7 @@ Item {
             id:line_2
             spacing: 0
             width: parent.width-(parent.padding*2)-(spacing*repeaterLabel.count-1)
-            height: (parent.height-(mainColumn.spacing*2)-(mainColumn.padding*2))/3
+            height: fontSize*1.5
             Repeater {
                 id: repeaterLabel
                 model:modelCatalog.getLegendListStatic()
@@ -58,13 +58,14 @@ Item {
                     Rectangle {
 
                         height: 1
-                        width: parent.width
-                        color: colorTwo
+                        x: fontSize
+                        width: parent.width - (fontSize*4)
+                        color: colorGreyC
                         anchors.bottom: parent.bottom
 
                     }
                     Text {
-                        color: colorTwo
+                        color: colorGreyA
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         anchors.fill: parent
@@ -79,36 +80,30 @@ Item {
             id: line_3
             spacing: 1
             width: parent.width-(parent.padding*2)-(spacing*repeaterLabel.count-1)
-            height: (parent.height-(mainColumn.spacing*2)-(mainColumn.padding*2))/3
+            height: fontSize*1.5
             Repeater {
                 id: repeaterEditLine
                 model: modelCatalog.getLegendListReport()
-                Item{
+
+                Text{
                     height: parent.height
                     width: parent.width/repeaterEditLine.count
-                    Rectangle {
-                        color:colorOne
-                        anchors.fill: parent
-                    }
-                    Text{
-                        color: colorTwo
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                        anchors.fill: parent
-                        font.pixelSize: textFactor(modelData)
-                        text: modelData
-                        wrapMode: Text.WordWrap
-                    }
+                    color: colorGreyA
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: textFactor(modelData)
+                    text: modelData
+                    wrapMode: Text.WordWrap
                 }
             }
         }
-    Rectangle{
-        x:-2
-        height: 3
-        width: parent.width+2
-        color: colorThree
+        Rectangle{
+            x:-2
+            height: 3
+            width: parent.width+2
+            color:colorGreyB
 
-    }
+        }
     }
 
     function t7(index)

@@ -7,14 +7,14 @@ Item {
     property bool onoff: false
     id: switchMenu
     width: parent.width
-    height: 100
+    height: parent.width/10
     anchors.left: parent.left
     anchors.leftMargin:  1
     anchors.bottom: parent.bottom
     anchors.bottomMargin: 1
 
 Component.onCompleted: {
-            tq()
+            //tq()
         }
     Item{
         id: switchMenuButton
@@ -124,7 +124,7 @@ Component.onCompleted: {
             fontSize = fontSize-1
         if (index === 3)
             fontSize = fontSize+1
-        console.log(keyboardType)
+        //console.log(keyboardType)
     }
 
     ListModel{
@@ -141,7 +141,7 @@ Component.onCompleted: {
 
         l = text.length
         l = fontSize*(1/l)
-        console.log(text,l)
+        //console.log(text,l)
         if (l>1)
             return fontSize
         else

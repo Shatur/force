@@ -20,7 +20,7 @@ Row {//line 2
 
 //                    }
                     Text {
-                        color: colorTwo
+                        color: colorGreyA
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         anchors.fill: parent
