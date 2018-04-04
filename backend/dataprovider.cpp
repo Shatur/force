@@ -11,6 +11,7 @@ const QString boundary = "popikih7swxAsrf456BGe4h";
 
 int Fesko::BaseDataProvider::login(QString login, QString password)
 {
+    qDebug()<<":::::::::::"<<login<<password;
     int retVal = doLogin(login, password);
     if (NO_ERROR != retVal)
     {
@@ -36,8 +37,9 @@ int Fesko::BaseDataProvider::getData(QString method, QUrlQuery params, QJsonObje
     }
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(str_response.toUtf8());
-    resp = jsonResponse.object();    
-
+    resp = jsonResponse.object();
+    if(method == "getCommentByReportId")
+        SingletonConnect::getInstance().setCommentData(str_response);
     SingletonConnect::getInstance().setReportData(str_response);
     if (resp.contains("err"))
     {
@@ -58,6 +60,7 @@ int Fesko::BaseDataProvider::getData(QString method, QUrlQuery params, QJsonObje
 
 int Fesko::BaseDataProvider::setData(QString method, QUrlQuery key, QUrlQuery params, SApiBinaryData* data)
 {
+    qDebug()<<params.toString( )<<990;
     QString str_response;
     int retVal = doSetData(method, key, params, data, str_response);
 

@@ -29,7 +29,6 @@ Report::Report(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    uiHelper.setupListWidget(ui->commentsList);
     rp = new ReportPhotos(NULL);
     views.addObserver(this);
     is_done = false;
@@ -37,7 +36,6 @@ Report::Report(QWidget *parent) :
 
 Report::~Report()
 {
-    qDebug()<<202;
     views.removeObserver(this);
     delete ui;
 }
@@ -65,49 +63,63 @@ bool Report::setup(int report_id, int shop_id, bool isReadOnly)
         SHOW_ERROR_DIALOG(err);
         return false;
     }
-
     Fesko::sql_provider()->mergeComments(report.id, comments);
 
+    commentModel = new Comment;
+    commentModel->setReportId(id);
     for(int i=0; i<comments.size(); i++)
     {
-        uiHelper.addWidgetToList(ui->commentsList,
-                                 new ReportCommentsWidget(comments[i]));
+        commentModel->setComment(comments[i].time,
+                                 comments[i].text,
+                                 comments[i].isUnread);
+        //uiHelper.addWidgetToList(ui->commentsList, new ReportCommentsWidget(comments[i]));
     }
 
     Fesko::unreadComments()->flush();
 
-    //Fake icon for increase combobox items height
-//    int cbih = uiHelper.viewProperties().winHeight/20;
-//    QPixmap pixmap(1, cbih);
-//    pixmap.fill(Qt::transparent);
-//    QIcon icon(pixmap);
-//    ui->catalogSelector->setIconSize(QSize(1, cbih));
-//    ui->catalogSelector->addItem(icon,"300");
 
 
- //   QQuickView* view = new QQuickView;
- //   view->rootContext()->setContextProperty("modelCatalog", mdl);
- //   view->setSource(QUrl("qrc:/ui/qml/Catalog/CatalogView.qml"));
- //   view->show();
 
 
-    ModelCatalog* _mdl = new ModelCatalog;
+   catalogModel = new Catalog;
+   catalogModel->setReadOnlyFlag(read_only);//надалі согласовувати із сінглтоном
+
+//   QQuickView* view = new QQuickView;
+//   view->rootContext()->setContextProperty("Catalog", catalogModel);
+//   view->setSource(QUrl("qrc:/ui/qml/Catalog/CatalogView.qml"));
+//   view->show();
+
+
+   //QQuickView *view = new QQuickView();
+   //QWidget *container = QWidget::createWindowContainer(view);
+   //container->setMinimumSize(200, 200);
+   //container->setMaximumSize(500, 500);
+
+//   view->setSource(QUrl("qrc:/ui/qml/test.qml"));
+//   view->setResizeMode(QQuickView::SizeRootObjectToView);
+//    view->show();
+//    view->hide();
+//    view->show();
 
     ShiftCatalogPage* _shift = new ShiftCatalogPage;
-    _shift->setModel(_mdl);
-    ui->stack->addWidget(_shift);
-    ui->stack->setCurrentIndex(1);
-
-    if (isReadOnly)
-    {
-        ui->makePhotoBtn->setVisible(false);
-        ui->makeReportBtn->setVisible(false);
-    }
+    _shift->setCatalog(catalogModel);
+    _shift->setComment(commentModel);
+    ui->verticalLayout->addWidget(_shift);
+    //ui->stack->setCurrentIndex(1);
 
     connect(_shift,&ShiftCatalogPage::destroyed,[=]{
-        //_shift->deleteLater();//weak
-        _mdl->deleteLater();
-        qDebug()<<"dstr";
+        catalogModel->deleteLater();
+        commentModel->deleteLater();
+    });
+    connect(_shift,&ShiftCatalogPage::toComment,commentModel,&Comment::reciverSlot);
+    connect(_shift,&ShiftCatalogPage::toAction,[=](QString a){
+        if(a.contains("back"))
+            on_stepBack_clicked();
+        if(a.contains("photo"))
+            on_makePhotoBtn_clicked();
+        if(a.contains("push"))
+            on_makeReportBtn_clicked();
+        qDebug()<<a;
     });
     return true;
 }
@@ -126,24 +138,30 @@ bool Report::onViewPop(QWidget *current, bool isKey)
                                                     QMessageBox::Yes|QMessageBox::No);
 }
 
-void Report::on_toolButton_2_clicked()//back button
+void Report::on_stepBack_clicked()//back button
 {
-
     views.pop();
     this->deleteLater();
 }
 
 
 void Report::on_makeReportBtn_clicked()
-{    
-    foreach (auto model, listModels) {//усі моделі вносять зміни до пакета відправки
-        QVariantHash hash;
-        hash = model->shortReportString();
-        SingletonConnect::getInstance().appendReportDataShortToList(hash);
+{
+    views.start_waiting();
+
+    if(!catalogModel->goodJobFinish()){
+        QMessageBox msgBox;
+        msgBox.setText("В каталозі має бути заповнено бодай одне поле");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.exec();
+        views.stop_waiting();
+        return;
     }
 
-    views.start_waiting();
-    emit needUpdate();     
+    QVariantHash hash;//хеш бо вдобно ввіддати у сусідній клас
+    hash = catalogModel->shortReportString();
+    SingletonConnect::getInstance().appendReportDataShortToList(hash);
+
 // до бази
     Fesko::API.setReport(report);
 
@@ -171,15 +189,12 @@ void Report::on_makePhotoBtn_clicked()
 
 void Report::on_addCommentBtn_clicked()
 {
-    Fesko::SComment comment;
-    comment.text =ui->commentEdit->document()->toPlainText();
-    if (!comment.text.length()) return;
-    comment.time = QDateTime::currentDateTime();
-    comment.reportID = report.id;
+//    Fesko::SComment comment;
+//    comment.text = ui->commentEdit->document()->toPlainText();
+//    if (!comment.text.length()) return;
+//    comment.time = QDateTime::currentDateTime();
+//    comment.reportID = report.id;
 
-    Fesko::API.addComment(report.id, comment);
-    Fesko::unreadComments()->markNewAsRead(comment);
-
-    uiHelper.addWidgetToList(ui->commentsList, new ReportCommentsWidget(comment));
-    ui->commentEdit->clear();
+//    Fesko::API.addComment(report.id, comment);
+//    Fesko::unreadComments()->markNewAsRead(comment);
 }

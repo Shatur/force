@@ -1,7 +1,7 @@
-#include "modelcatalog.h"
+#include "catalog.h"
 
 
-void ModelCatalog::editReportField(int indexRow,int indexField, QString value)
+void Catalog::editReportField(int indexRow,int indexField, QString value)
 {
     ProductItem _item;
     _item = modelData.value(catalogIndex).at(indexRow);
@@ -13,7 +13,7 @@ void ModelCatalog::editReportField(int indexRow,int indexField, QString value)
     qDebug()<<modelData.value(catalogIndex)[indexRow].reportFieldsString;
 }
 
-ModelCatalog::ModelCatalog(QObject *parent)
+Catalog::Catalog(QObject *parent)
     : QAbstractListModel(parent)
 {
     rawData = SingletonConnect::getInstance().getReportData();
@@ -21,13 +21,13 @@ ModelCatalog::ModelCatalog(QObject *parent)
     connections();
 }
 
-QVariant ModelCatalog::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role) const
 {
     return QVariant();
     // FIXME: Implement me!
 }
 
-bool ModelCatalog::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+bool Catalog::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
 {
     if (value != headerData(section, orientation, role)) {
         // FIXME: Implement me!
@@ -37,13 +37,13 @@ bool ModelCatalog::setHeaderData(int section, Qt::Orientation orientation, const
     return false;
 }
 
-int ModelCatalog::rowCount(const QModelIndex &parent) const
+int Catalog::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid())//використовується хак - інверсія умовлення
         return modelData.value(catalogIndex).size();//розмір структури - кількість ітемів у відображенні
 }
 
-QVariant ModelCatalog::data(const QModelIndex &index, int role) const
+QVariant Catalog::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -63,38 +63,39 @@ QVariant ModelCatalog::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool ModelCatalog::setData(const QModelIndex &index, const QVariant &value, int role)
+bool Catalog::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+
     if (role == ReportFields){
         modelData[catalogIndex][index.row()].reportFieldsString = value.toStringList();
-     //   emit dataChanged(index, index, QVector<int>() << role);
+      // emit dataChanged(index, index, QVector<int>() << role);
         return true;
     }
     return false;
 }
 
-Qt::ItemFlags ModelCatalog::flags(const QModelIndex &index) const
+Qt::ItemFlags Catalog::flags(const QModelIndex &index) const
 {    
     if (!index.isValid())
         return Qt::NoItemFlags;
     return Qt::ItemIsEditable; // FIXME: Implement me!
 }
 
-bool ModelCatalog::insertRows(int row, int count, const QModelIndex &parent)
+bool Catalog::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
     // FIXME: Implement me!
     endInsertRows();
 }
 
-bool ModelCatalog::removeRows(int row, int count, const QModelIndex &parent)
+bool Catalog::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
     // FIXME: Implement me!
     endRemoveRows();
 }
 
-QHash<int, QByteArray> ModelCatalog::roleNames() const
+QHash<int, QByteArray> Catalog::roleNames() const
 {
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
     if (modelData.isEmpty())
@@ -109,13 +110,20 @@ QHash<int, QByteArray> ModelCatalog::roleNames() const
     return roles;
 }
 
-bool ModelCatalog::goodJobDot(int index)
+void Catalog::setReadOnlyFlag(bool _v)
 {
-    return !modelData[catalogIndex][index].reportFieldsString.contains("");
-    //перевірка чи всі поля заповнені для ітему
+    readOnly = _v;
 }
 
-void ModelCatalog::changeCatalogList()
+bool Catalog::goodJobDot(int index)
+{
+    bool _flg = !modelData[catalogIndex][index].reportFieldsString.contains("");//перевірка за індексом
+    goodJobProgress[catalogIndex][index]= _flg;//додає у список
+    return _flg;
+    //перевірка чи всі поля заповнені для ітему та формує список по статусам для всьго розділу каталогу
+}
+
+void Catalog::changeCatalogList()
 {
     if (catalogsCount<0)
         catalogsCount = catalogIndex;
@@ -124,7 +132,7 @@ void ModelCatalog::changeCatalogList()
     catalogIndex++;
 }
 
-QVariant ModelCatalog::getStackStatus()
+QVariant Catalog::getStackStatus()
 {
     QString _res;
     _res.append(QString::number(catalogIndex+1));
@@ -134,28 +142,27 @@ QVariant ModelCatalog::getStackStatus()
     //робе строку з даними про розміз каталогу і індекс поточного розділу
 }
 
-QVariant ModelCatalog::getListName()
+QVariant Catalog::getListName()
 {
     return catalogPassport.value(catalogIndex).value("catalogName");
 }
 
-
-QVariant ModelCatalog::getLegendListReport() const
+QVariant Catalog::getLegendListReport() const
 {
     return QVariant( legendListReport.value(catalogIndex));
 }
 
-QVariant ModelCatalog::getLegendFirstStatic() const
+QVariant Catalog::getLegendFirstStatic() const
 {
     return QVariant(legendFirstStatic.value(catalogIndex));
 }
 
-QVariant ModelCatalog::getLegendListStatic() const
+QVariant Catalog::getLegendListStatic() const
 {
     return QVariant(legendListStatic.value(catalogIndex));
 }
 
-void ModelCatalog::connections()
+void Catalog::connections()
 {
     connect(&SingletonConnect::getInstance(),&SingletonConnect::report,
             [=](QString report){
@@ -163,7 +170,7 @@ void ModelCatalog::connections()
     });
 }
 
-void ModelCatalog::dataExam()
+void Catalog::dataExam()
 {
 
     if(rawData->isEmpty() or rawData->isNull())
@@ -194,7 +201,7 @@ void ModelCatalog::dataExam()
     //блок підготовки відповіді від сервера
 }
 
-void ModelCatalog::makePasport(QJsonObject &incomingObject)
+void Catalog::makePasport(QJsonObject &incomingObject)
 {
     QMap<QString,QString> _map;
     _map.insert("catalogName",incomingObject["catalogName"].toString());
@@ -204,7 +211,7 @@ void ModelCatalog::makePasport(QJsonObject &incomingObject)
     //фомує інформацію про розділи каталога
 }
 
-void ModelCatalog::makeModelList(QJsonArray &incomingArray)
+void Catalog::makeModelList(QJsonArray &incomingArray)
 {
     QList<ProductItem> _list;
     int count = 0;
@@ -237,7 +244,7 @@ void ModelCatalog::makeModelList(QJsonArray &incomingArray)
     //надання данним структури у рамках классу
 }
 
-void ModelCatalog::makeLegend(QJsonArray &incomingArray)
+void Catalog::makeLegend(QJsonArray &incomingArray)
 {
     QList<QString> sttic;
     QList<QString> rprt;
@@ -257,12 +264,26 @@ void ModelCatalog::makeLegend(QJsonArray &incomingArray)
     //тут готуються дані для легенди
 }
 
-QVariantHash ModelCatalog::shortReportString()
+QVariantHash Catalog::shortReportString()
 {
     return packman::reportFieldsToJsonShort(modelData.value(catalogIndex), catalogPassport.value(catalogIndex)).toVariantHash();
 }
 
-void ModelCatalog::rawUpdate()
+bool Catalog::goodJobFinish()
+{
+    int _sizeListAllItem =  modelData[catalogIndex].size();
+    int _sizeListReadyItems = goodJobProgress[catalogIndex].size();
+    if (_sizeListAllItem == _sizeListReadyItems)
+        return !goodJobProgress[catalogIndex].values().contains(false);
+    return false;//перевірка чи всі позиції були в обробці
+}
+
+bool Catalog::getReadOnlyFlag()
+{
+    return readOnly;
+}
+
+void Catalog::rawUpdate()
 {
     QJsonArray rootArray;
     QJsonValue _globalId;
@@ -271,7 +292,7 @@ void ModelCatalog::rawUpdate()
     QJsonArray _staticFields;
 }
 
-QJsonArray ModelCatalog::packman::staticFieldsToJson(QList<QString> value)
+QJsonArray Catalog::packman::staticFieldsToJson(QList<QString> value)
 {
     QJsonArray rootArray;
     for (const QString & item : value)
@@ -285,7 +306,7 @@ QJsonArray ModelCatalog::packman::staticFieldsToJson(QList<QString> value)
     //запаковує статичні дані до json
 }
 
-QJsonArray ModelCatalog::packman::reportFieldsToJson(QList<QString> value, QList<QString> type)
+QJsonArray Catalog::packman::reportFieldsToJson(QList<QString> value, QList<QString> type)
 {
     QJsonArray rootArray;
     for (int count = 0; count < value.size();count++)
@@ -301,7 +322,7 @@ QJsonArray ModelCatalog::packman::reportFieldsToJson(QList<QString> value, QList
     //запаковує репорт дані до json
 }
 
-QJsonObject ModelCatalog::packman::reportFieldsToJsonShort(QList<ProductItem> list, QMap<QString,QString> passport)
+QJsonObject Catalog::packman::reportFieldsToJsonShort(QList<ProductItem> list, QMap<QString,QString> passport)
 {
     QJsonObject rootObject;
     QJsonArray reportArray;
@@ -320,7 +341,7 @@ QJsonObject ModelCatalog::packman::reportFieldsToJsonShort(QList<ProductItem> li
     return rootObject;
 }
 
-QJsonArray ModelCatalog::packman::itemPack(QJsonValue globalId, QJsonValue name, QJsonArray staticFields, QJsonArray reportFields)
+QJsonArray Catalog::packman::itemPack(QJsonValue globalId, QJsonValue name, QJsonArray staticFields, QJsonArray reportFields)
 {
     QJsonArray rootArray;
     QList<QJsonValue> list;
@@ -337,7 +358,7 @@ QJsonArray ModelCatalog::packman::itemPack(QJsonValue globalId, QJsonValue name,
     return rootArray;
 }
 
-QJsonArray ModelCatalog::packman::valuesListToJsonArray(QList<QJsonValue> list)
+QJsonArray Catalog::packman::valuesListToJsonArray(QList<QJsonValue> list)
 {
     if(list.isEmpty())
         return QJsonArray();
@@ -348,7 +369,7 @@ QJsonArray ModelCatalog::packman::valuesListToJsonArray(QList<QJsonValue> list)
     //формує масив із списку значень
 }
 
-QJsonArray ModelCatalog::packman::arraysListToJsonArray(QList<QJsonArray> list)
+QJsonArray Catalog::packman::arraysListToJsonArray(QList<QJsonArray> list)
 {
     if(list.isEmpty())
         return QJsonArray();

@@ -18,8 +18,10 @@ public:
 
 
 
-    QString *getReportData();
+    QString* getReportData();
+    QString* getCommentData();
     void setReportData(const QString &value);
+    void setCommentData(const QString &value);
 
     QList<QVariantHash> getReportDataShortList() const;
     void appendReportDataShortToList( const QVariantHash &value);
@@ -30,6 +32,7 @@ private:
 
     SingletonConnect(SingletonConnect const&) = delete;
     SingletonConnect& operator= (SingletonConnect const&) = delete;
+    QString commentData;
     QString catalogsData;  // дані для репортів. Єдиний екземпляр. Моделі каталогів працюють із ним за адресою.
     QList<QVariantHash> reportDataShortList;
 signals:

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network sql positioning location multimedia quickwidgets sensors
+QT       += sql core gui network positioning location multimedia quickwidgets sensors svg
 #multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -71,9 +71,11 @@ SOURCES += main.cpp\
     views/archivments.cpp \
     widgets/archivment.cpp \
     views/settings.cpp \
-    mvc/modelcatalog.cpp \
     backend/singletonconnect.cpp \
-    widgets/report/shiftcatalogpage.cpp
+    widgets/report/shiftcatalogpage.cpp \
+    mvc/catalog.cpp \
+    mvc/comment.cpp \
+    backend/fileside.cpp
 
 HEADERS  += mainwindow.h \
     backend/api.h \
@@ -119,9 +121,11 @@ HEADERS  += mainwindow.h \
     views/archivments.h \
     widgets/archivment.h \
     views/settings.h \
-    mvc/modelcatalog.h \
     backend/singletonconnect.h \
-    widgets/report/shiftcatalogpage.h
+    widgets/report/shiftcatalogpage.h \
+    mvc/catalog.h \
+    mvc/comment.h \
+    backend/fileside.h
 
 FORMS    += mainwindow.ui \
     widgets/routeitemwidget.ui \

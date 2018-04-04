@@ -120,10 +120,12 @@ int FreskoAPI::getAPICall(QString method, QUrlQuery params, QJsonObject &resp)
 
 int FreskoAPI::setAPICall(QString method, QUrlQuery key, QUrlQuery params, QJsonObject &resp, SApiBinaryData* data)
 {
+
     if (!provider)
     {
         return ERR_INTERNAL_ERROR;
     }
+
 
     int err = provider->setData(method, key, params, data);
 
@@ -586,7 +588,6 @@ int FreskoAPI::getComments(QDate from_date, QDate to_date, QVector<SCommentsList
 int FreskoAPI::getCommentByReportId(int report_id, QVector<SComment> &out)
 {
     QUrlQuery data;
-
     data.addQueryItem("report_id", QString::number(report_id));
     QJsonObject resp;
     out.clear();

@@ -1,44 +1,50 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.3
 import "../components"
-
+import "../Comment"
 Item{
     id: catalog
     property real fontSize: 14
+    property bool isReadOnly: Catalog.getReadOnlyFlag()
+
+    property string colorFour: "#2980b9"
     property string keyboardType: "general"//for SettingPanel
-    property int indexCurrentItem: 0//активний ітем у каталозі на даний час
+    property int indexCurrentItem: 0
+
+    property string colorThree:"#002366"//активний ітем у каталозі на даний час
     property string colorOne:"#eee"
     property string colorTwo:"#333"
-    property string colorThree:"royalblue"
-    property string colorFour: "#2980b9"
     property string colorGreyA: "#666666"
     property string colorGreyB: "#999999"
     property string colorGreyC: "#cccccc"
+
+    signal qmlSignal(string message)
 
     Rectangle
     {
         id: bakcground
         width: 1
         anchors.fill: parent
-        color: colorOne
+        color: colorGreyC
     }
-//Column{
-//        anchors.fill: parent
-//    PickList{
-//        id: pickList
+    PickList{
+        id: pickList
 
-//    }
-//    Loader{
-//        id:loader
-//    }
-//}
-//    Component{
-//        id:comp2
-//        Rectangle{}
-//    }
+    }
+    Loader{
+        id:loader
+        height:  parent.height-pickList.height
+        y: pickList.height
+        width: parent.width
+    }
 
-//    Component{
-//        id: comp
+    Component{
+        id:comp2
+        Rectangle{}
+    }
+
+    Component{
+        id: comp
 
         ListView {
             id: list
@@ -47,24 +53,37 @@ Item{
             spacing: fontSize/4
             header: Header{z:6}
             headerPositioning: ListView.OverlayHeader
-            model: modelCatalog
+            model: Catalog
             delegate: Delegate{}
-
         }
-   // }
+    }
+    BottomNavigation{
+        id: navigationLine
+        width: parent.width
+        height: parent.height*0.066
+        anchors.bottom:   loader.bottom
+    }
+   SettingPanel{
+        height: parent.height*0.066
+        anchors.bottom:    navigationLine.top
+    }
+
+  CommentView{
+      id: commentView
+        height: parent.height
+        width: parent.width
+    }
     Component.onCompleted: {
-        console.log(height,width)
         listPick()
     }
 
-    //SettingPanel{}
     //DoubleEdit{id: doubleEditRoot}
     function listPick(){
-        modelCatalog.changeCatalogList()
+        Catalog.changeCatalogList()
         loader.sourceComponent = comp2
         loader.sourceComponent = comp
-        pickList.stackStatus ="   " + modelCatalog.getStackStatus()
-        pickList.namelist =   modelCatalog.getListName()
+        pickList.stackStatus ="   " + Catalog.getStackStatus()
+        pickList.namelist =   Catalog.getListName()
     }
 }
 

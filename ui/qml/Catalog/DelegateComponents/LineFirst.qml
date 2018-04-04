@@ -11,7 +11,7 @@ import QtQuick 2.0
 //        }
         Text{
             color: colorTwo
-            font.pixelSize: fontSize*2
+            font.pixelSize: fontSize*1.5
             font.bold: (indexItem === indexCurrentItem)?true:false
             anchors.fill: parent
             text: ""+id +". "+ name

@@ -331,6 +331,7 @@ int SQLDataProvider::removeRawEntry(int id)
 
 int SQLDataProvider::doLogin(QString login, QString password)
 {
+    qDebug()<<500;
     int err = prepare_db();
     if (NO_ERROR != err)
     {
@@ -416,8 +417,10 @@ int SQLDataProvider::doGetData(QString method, QUrlQuery params, QString &resp)
 
 int SQLDataProvider::doSetData(QString method, QUrlQuery key, QUrlQuery params, SApiBinaryData *data, QString &resp)
 {
+    qDebug()<<100001<<params.toString();
     bool isUpdate = !key.isEmpty();
-    if (isUpdate) isUpdate = isUpdate && outCount(method, key);
+    if (isUpdate)
+        isUpdate = isUpdate && outCount(method, key);
     qDebug()<<"IS_UPDATE: "<<isUpdate;
 
     /*if (!key.isEmpty())
@@ -505,7 +508,7 @@ int SQLDataProvider::createDB()
     {
         QFile::remove(dbFileName());
     }
-
+    qDebug()<<100;
     //Get create DB sql from DB
     QFile file(":/backend/createdb.sql");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -515,6 +518,7 @@ int SQLDataProvider::createDB()
     }
     QStringList init_sql = QString(file.readAll()).split("\n");
 
+    qDebug()<<200;
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(dbFileName());
 
@@ -536,6 +540,7 @@ int SQLDataProvider::createDB()
         }
     }
 
+    qDebug()<<300;
     q.prepare("INSERT INTO general (current_set, version, font_size) VALUES (:current_set, :version, :font_size)");
     q.bindValue(":current_set", "requests1");
     q.bindValue(":version", DB_VERSION);
@@ -561,7 +566,6 @@ QString SQLDataProvider::dbFileName()
      {
          dir.mkpath(path);
      }
-     qDebug()<<"DB name: "<<path + "/foffline.db";
      return path + "/foffline.db";
 }
 

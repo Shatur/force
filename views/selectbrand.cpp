@@ -115,9 +115,6 @@ void SelectBrand::on_goReportBtn_clicked()
 {    
     int list_idx = ui->brandsList->currentRow();
 
-
-
-
     if ((list_idx>=0) && (list_idx<sr.size()))
     {
         int idx = sr[list_idx].id;

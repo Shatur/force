@@ -5,7 +5,7 @@
 #include "widgets/report/reportitem.h"
 
 #include "uihelper.h"
-#include "mvc/modelcatalog.h"
+#include "mvc/catalog.h"
 
 
 

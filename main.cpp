@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QtDebug>
 #include <QtGlobal>
+#include "backend/fileside.h"
 
 #include "camera/cam_imgpreocessor.h"
 
@@ -22,6 +23,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &, const QString &
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    FileSide fileSide;
     MainWindow w;
 
 #ifdef Q_OS_WIN32

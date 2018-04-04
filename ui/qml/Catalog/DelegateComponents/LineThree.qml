@@ -5,23 +5,6 @@ import "../../components"
 Item {
     property var tts: reportFields
 
-//   ListView{
-//       anchors.fill: parent
-//       orientation: ListView.Horizontal
-//       model: reportFields
-//       delegate: Rectangle{
-//           height: fontSize*2
-//           width: fontSize*4
-//           TextField{
-//               text: modelData
-//               onTextEdited: {
-//                   goodJobAccept(index,text)
-
-//               }
-//           }
-//       }
-//   }
-//    Rectangle{
  Row {//line 3
             id: line_3
             anchors.fill:parent
@@ -35,11 +18,11 @@ Item {
                     TextField {
                         id:editField
                         focus: (indexCurrentItem === indexItem)?true:false
-                        readOnly: rdOnly
+                        readOnly: isReadOnly
                         inputMethodHints: (keyboardType === "decimal")?Qt.ImhPreferNumbers:Qt.ImhNone
                         onTextEdited:{
                             goodJobAccept(index,text)
-                            goodJob = modelCatalog.goodJobDot(indexItem)
+                            goodJob = Catalog.goodJobDot(indexItem)
                         }
                         Item{
                             id:checkBox
@@ -68,8 +51,9 @@ Item {
                         height: parent.height
                         width: parent.width
                         color: colorThree
+                        verticalAlignment: TextInput.AlignBottom
                         horizontalAlignment: TextInput.AlignHCenter
-                        font.pixelSize: fontSize*3
+                        font.pixelSize: fontSize*2
                         font.italic: false
                         font.bold: editField.focus?true:false
                         font.family: "Verdana"

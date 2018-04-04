@@ -39,5 +39,12 @@
         <file>ui/qml/Catalog/DelegateComponents/LineSecond.qml</file>
         <file>ui/qml/Catalog/DelegateComponents/LineFirst.qml</file>
         <file>ui/qml/components/PickList.qml</file>
+        <file>ui/qml/Comment/CommentView.qml</file>
+        <file>ui/qml/Comment/Dlg.qml</file>
+        <file>ui/art/comment.svg</file>
+        <file>ui/qml/components/BottomNavigation.qml</file>
+        <file>ui/art/settings.svg</file>
+        <file>ui/qml/test.qml</file>
+        <file>ui/art/syn.svg</file>
     </qresource>
 </RCC>

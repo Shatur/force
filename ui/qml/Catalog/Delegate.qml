@@ -9,10 +9,9 @@ Item {
 
     property real wd:parent.width-2
     property real hg
-    property bool rdOnly: false
-    property bool goodJob: modelCatalog.goodJobDot(indexItem)
+    property bool goodJob: Catalog.goodJobDot(indexItem)
 
-    property variant placeHolderList: modelCatalog.getLegendListReport()
+    property variant placeHolderList: Catalog.getLegendListReport()
     signal onChange(int index, string value);
     signal fieldTextEdited(variant text)
 
@@ -26,7 +25,7 @@ Item {
     Rectangle{
         id: backRect
         color: colorOne
-        opacity: goodJob?0.3:1
+        //opacity: goodJob?0.3:1
         radius: 5
         anchors.fill: parent
         border.color: colorGreyB

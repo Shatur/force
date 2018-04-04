@@ -1,8 +1,11 @@
 #ifndef SHIFTCATALOGPAGE_H
 #define SHIFTCATALOGPAGE_H
+#include <QQmlContext>
+#include <QQuickItem>
 
 #include <QWidget>
-#include "mvc/modelcatalog.h"
+#include "mvc/catalog.h"
+#include "mvc/comment.h"
 
 namespace Ui {
 class ShiftCatalogPage;
@@ -11,15 +14,20 @@ class ShiftCatalogPage;
 class ShiftCatalogPage : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit ShiftCatalogPage(QWidget *parent = 0);
     ~ShiftCatalogPage();    
-    void setModel(ModelCatalog*);//модель ініціалізується рівнем вище. Тут передається до qml.    
+    void setCatalog(Catalog*);//модель ініціалізується рівнем вище. Тут передається до qml.
+    void setComment(Comment*);
 
+public slots:
+        void cppSlot(QString);
 private:
-    ModelCatalog* model;
     Ui::ShiftCatalogPage *ui;
+    QQuickItem *root;
+signals:
+    void toComment(QString);
+    void toAction(QString);
 };
 
 #endif // SHIFTCATALOGPAGE_H

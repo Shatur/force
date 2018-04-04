@@ -1,5 +1,5 @@
-#ifndef MODELCATALOG_H
-#define MODELCATALOG_H
+#ifndef Catalog_H
+#define Catalog_H
 
 #include <QAbstractListModel>
 #include <QDebug>
@@ -10,12 +10,12 @@
 
 #include "backend/singletonconnect.h"
 
-class ModelCatalog : public QAbstractListModel
+class Catalog : public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    explicit ModelCatalog(QObject *parent = nullptr);
+    explicit Catalog(QObject *parent = nullptr);
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -56,7 +56,14 @@ public:
         QList<QString> reportFieldsString; //поля для звіту
         QList<QString> reportFieldsType; //поля для звіту
     };
+    void setReadOnlyFlag(bool);
+    void setShopId(int value);
+    void setReportId(int value);
 
+    QVariantHash shortReportString();
+    bool goodJobFinish();//відповідаю чи готов звіт бути надісланим
+
+    Q_INVOKABLE bool getReadOnlyFlag();
     Q_INVOKABLE bool goodJobDot(int index);
     Q_INVOKABLE void changeCatalogList();
     Q_INVOKABLE QVariant getStackStatus();//верта розмір каталогу і позицію розділу у ньому
@@ -64,16 +71,7 @@ public:
     Q_INVOKABLE QVariant getLegendListStatic() const;//надсилає в qml поля легенди
     Q_INVOKABLE QVariant getLegendListReport() const;//надсилає в qml поля легенди
     Q_INVOKABLE QVariant getLegendFirstStatic() const;//надсилає в qml поля легенди
-
     Q_INVOKABLE void editReportField(int indexRow, int indexField, QString value);//вносе зміни із qml до моделі
-
-    void setShopId(int value);
-
-    void setReportId(int value);
-
-    //void setCatalogIndex(int value);
-
-    QVariantHash shortReportString();
 private:
     class packman{
     public:
@@ -85,19 +83,9 @@ private:
         static QJsonArray arraysListToJsonArray(QList<QJsonArray> list);
     };
 
-
-    QMap<int,QList<QString>> legendListStatic;//поля легенди
-    QMap<int,QList<QString>> legendListReport;//поля легенди
-    QMap<int,QString> legendFirstStatic;//поля легенди
-
-    QMap<int,QList<ProductItem>> modelData;//головна структура данних моделі
-
-    //QList<QString> headerFields; // поля хідера
-    //QList<QString> headerFieldsMask; // маска типів полів до хидера
-
     void connections();// усі connect() тут. Для ініціалізації.
 
-    QString* rawData;//вхідні данні
+
     void dataExam();//вхідні дані оброблюються тут
     void makePasport(QJsonObject&);//присвоюються дані про катало
     void makeModelList(QJsonArray &);//присвоюються дані до моделі
@@ -106,9 +94,17 @@ private:
 
     int catalogIndex;//absolutle. its catalog index
     int catalogsCount = -1;
+
+    bool readOnly = true;
+    QString* rawData;//вхідні данні
+    QMap<int,QMap<int,bool>>goodJobProgress;
+    QMap<int,QList<QString>> legendListStatic;//поля легенди
+    QMap<int,QList<QString>> legendListReport;//поля легенди
+    QMap<int,QString> legendFirstStatic;//поля легенди
     QMap<int,QMap<QString,QString>> catalogPassport;//personal data of catalog
+    QMap<int,QList<ProductItem>> modelData;//головна структура данних моделі
 
 
 };
 
-#endif // MODELCATALOG_H
+#endif // Catalog_H

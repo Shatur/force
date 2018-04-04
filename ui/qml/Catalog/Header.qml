@@ -1,13 +1,10 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
-
+import "../components"
 
 Item {
-
-
     x:1
     y:1
-
     width: parent.width-2
     height: (fontSize*5)
     Rectangle{
@@ -15,12 +12,26 @@ Item {
         color:colorOne
         anchors.fill: parent
     }
+    Rectangle{
+        height: 2
+        width: parent.width+2
+        color:colorGreyB
+        anchors.top: mainColumn.top
 
+    }
+    Rectangle{
+        height: 3
+        width: parent.width+2
+        color:colorGreyA
+        anchors.bottom: mainColumn.bottom
+
+    }
     Column{
         id: mainColumn
         anchors.fill: parent
         spacing: 1
         padding: 2
+
 
         Item{//line 1
             height: fontSize*1.5
@@ -37,7 +48,7 @@ Item {
                 color: colorGreyA
                 font.pixelSize: fontSize
                 anchors.fill: parent
-                text: modelCatalog.getLegendFirstStatic()
+                text: Catalog.getLegendFirstStatic()
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -51,7 +62,7 @@ Item {
             height: fontSize*1.5
             Repeater {
                 id: repeaterLabel
-                model:modelCatalog.getLegendListStatic()
+                model:Catalog.getLegendListStatic()
                 Item{
                     height: parent.height
                     width: parent.width/repeaterLabel.count;
@@ -83,7 +94,7 @@ Item {
             height: fontSize*1.5
             Repeater {
                 id: repeaterEditLine
-                model: modelCatalog.getLegendListReport()
+                model: Catalog.getLegendListReport()
 
                 Text{
                     height: parent.height
@@ -97,13 +108,7 @@ Item {
                 }
             }
         }
-        Rectangle{
-            x:-2
-            height: 3
-            width: parent.width+2
-            color:colorGreyB
 
-        }
     }
 
     function t7(index)

@@ -6,36 +6,27 @@ import QtQuick.Layouts 1.3
 Item {
     property bool onoff: false
     id: switchMenu
+    z:parent.z+1
+    //height: 100
     width: parent.width
-    height: parent.width/10
-    anchors.left: parent.left
-    anchors.leftMargin:  1
-    anchors.bottom: parent.bottom
-    anchors.bottomMargin: 1
 
-Component.onCompleted: {
-            //tq()
-        }
     Item{
         id: switchMenuButton
-        z:2
-        width: 100
-        height: 100
+        height: parent.height
+        width: height
 
         Rectangle{
-            color: colorThree
+            color: onoff?colorOne:"transparent"
             anchors.fill: parent
-            //opacity: 0.3
-            radius: onoff? 0: 5
+
         }
 
         Image {
             id: imageSwitchMenuButton
-            height: parent.height*0.8
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            width: parent.width*0.8
-            source: "qrc:/ui/art/cogwheel.png"
+            scale: 0.7
+            anchors.fill: parent
+            anchors.centerIn: parent
+            source: "qrc:/ui/art/settings.svg"
 
         }
         MouseArea {
@@ -43,76 +34,112 @@ Component.onCompleted: {
             anchors.fill: parent
             onClicked: {
                 onoff = !onoff
-                //toolsLine.enabled = onoff
-                //toolsLine.visible = onoff
+                showHideToolsLineBottom.start()
+                showHideToolsLineTop.start()
                 showHideToolsLine.start()
                 rotationAnimation.start()
             }
         }
     }
 
-    RowLayout{
+    Item{
         id: toolsLine
         x: parent.width -1
         y: switchMenuButton.y
 
-        width: parent.width-switchMenuButton.width-2
-        spacing: 0
-        Repeater{
-            id: idSettingButtonModel
-            model: settingButtonsModel
-            Rectangle {
-                height: 100
-                width: (toolsLine.width-switchMenuButton.width)/idSettingButtonModel.count
-                color: colorThree
-                Layout.fillWidth: true
+        height: switchMenu.height
+        width: parent.width-switchMenuButton.width
+        Rectangle{
+            id: topLine
+            x: parent.width
+            height: 2
+            width: parent.width+switchMenuButton.width
+            color:colorGreyA
+            z: parent.z+1
+            anchors.top: parent.top
 
+        }
+        Rectangle{
+            id:bottomLine
+            x: parent.width
+            height: 2
+            width: parent.width+switchMenuButton.width
+            color:colorGreyA
+            z: parent.z+1
+            anchors.bottom:  parent.bottom
+            anchors.bottomMargin: -height
 
-                Text{
-                    anchors.fill: parent
-                    text:  model.text
-                    color: colorOne
-                    wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: textFactor(model.text)
-                }
-                MouseArea{
-                    anchors.fill:parent
-                    onClicked: {
-                        clickedCurent(index)
+        }
+
+        Row{
+            anchors.fill: parent
+            Repeater{
+                id: idSettingButtonModel
+                model: settingButtonsModel
+                Rectangle {
+                    height: toolsLine.height
+                    width: toolsLine.width/idSettingButtonModel.count
+                    color: colorGreyC
+                    Text{
+                        anchors.fill: parent
+                        text:  model.text
+                        color: colorThree
+                        wrapMode: Text.WordWrap
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.pixelSize: textFactor(model.text)
                     }
-                    onPressed: {
-                        parent.width = parent.width + 5
-                        parent.height = parent.height +5
-                    }
-                    onReleased:  {
-                        parent.width = parent.width - 5
-                        parent.height = parent.height - 5
+                    MouseArea{
+                        anchors.fill:parent
+                        onClicked: {
+                            clickedCurent(index)
+                        }
+                        onPressed: {
+                            parent.width = parent.width + 5
+                            parent.height = parent.height +5
+                        }
+                        onReleased:  {
+                            parent.width = parent.width - 5
+                            parent.height = parent.height - 5
+                        }
                     }
                 }
             }
         }
     }
-
+    PropertyAnimation{
+        id: showHideToolsLineBottom
+        target: bottomLine
+        properties: "x"
+        easing.type: Easing.Linear
+        duration: 550
+        from: onoff?parent.width:-switchMenuButton.width
+        to:onoff?-switchMenuButton.width:parent.width
+    }
+    PropertyAnimation{
+        id: showHideToolsLineTop
+        target: topLine
+        properties: "x"
+        easing.type: Easing.Linear
+        duration: 350
+         from: onoff?parent.width:-switchMenuButton.width
+        to:onoff?-switchMenuButton.width:parent.width
+    }
     PropertyAnimation{
         id: showHideToolsLine
         target: toolsLine
         properties: "x"
         easing.type: Easing.OutBack
-        duration: 350
-        from: onoff?switchMenuButton.x-parent.width:switchMenuButton.x+switchMenuButton.width+toolsLine.spacing
-        to: onoff?switchMenuButton.x+switchMenuButton.width+toolsLine.spacing:switchMenuButton.x-parent.width
-        onStopped: {
-
-        }
+        duration: 450
+         from: onoff?parent.width:switchMenuButton.width
+        to:onoff?switchMenuButton.width:parent.width
     }
     RotationAnimator {
         id: rotationAnimation
         target: imageSwitchMenuButton;
         from: 0;
         to: 360;
-        duration: 350
+        duration: 450
     }
 
     function clickedCurent(index){
@@ -129,10 +156,10 @@ Component.onCompleted: {
 
     ListModel{
         id: settingButtonsModel
-        ListElement{text:"Клавіатура цифрова";source:""}
-        ListElement{text:"Клавіатура звичайна";source:""}
-        ListElement{text:"Ромір шрифту менше";source:""}
-        ListElement{text:"Розмір шрифту більше";source:""}
+        ListElement{text:"Клавіатура Ц";source:""}
+        ListElement{text:"Клавіатура Т";source:""}
+        ListElement{text:"Шрифт -";source:""}
+        ListElement{text:"Шрифт +";source:""}
         //ListElement{text:"5";source:""}
     }
 

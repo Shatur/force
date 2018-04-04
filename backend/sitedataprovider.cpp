@@ -34,11 +34,12 @@ SiteDataProvider::SiteDataProvider(QObject *parent) : QObject(parent)
 
 int SiteDataProvider::doLogin(QString login, QString password)
 {
+    qDebug()<<300;
     QUrlQuery q;
     q.addQueryItem("_action", "userLogin");
     q.addQueryItem("login", login);
     q.addQueryItem("password", password);
-
+    qDebug()<<login<<password;
     QString string_resp;
     QJsonObject resp;
 
@@ -50,8 +51,6 @@ int SiteDataProvider::doLogin(QString login, QString password)
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(string_resp.toUtf8());
     resp = jsonResponse.object();
-    qDebug()<<12345;
-    qDebug()<<resp;
 
     if (resp.contains("token"))
     {
@@ -66,7 +65,7 @@ int SiteDataProvider::doLogin(QString login, QString password)
         {
 
             err = resp["code"].toString().toInt();
-            return err+2000;
+            return err;
         }//if we have a code
     }
     return ERR_PROTOCOL;
@@ -81,6 +80,7 @@ int SiteDataProvider::doGetData(QString method, QUrlQuery params, QString &resp)
 
 int SiteDataProvider::doSetData(QString method, QUrlQuery key, QUrlQuery params, SApiBinaryData *data, QString &resp)
 {
+    qDebug()<<method<<2233;
     //merge key and params
     QList<QPair<QString, QString> > key_items = key.queryItems();
     for (int i=0; i<key_items.size(); i++)

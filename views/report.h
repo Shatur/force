@@ -6,10 +6,10 @@
 #include "views/reportphotos.h"
 
 #include "viewmanager.h"
-#include "mvc/modelcatalog.h"
+#include "mvc/catalog.h"
+#include "mvc/comment.h"
 
 #include <QWidget>
-
 namespace Ui {
 class Report;
 }
@@ -27,10 +27,10 @@ public:
     virtual bool onViewPop(QWidget* current, bool isKey);
 
 signals:
-    void needUpdate();
+    //void needUpdate();
 
 private slots:
-    void on_toolButton_2_clicked();//back button
+    void on_stepBack_clicked();//back button
 
     void on_makeReportBtn_clicked();
 
@@ -48,7 +48,8 @@ private:
     Fesko::SReport report;
 
     ReportPhotos* rp;
-    QList<ModelCatalog*> listModels;
+    Catalog* catalogModel;
+    Comment* commentModel;
 };
 
 #endif // REPORT_H
