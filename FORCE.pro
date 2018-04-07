@@ -75,7 +75,8 @@ SOURCES += main.cpp\
     widgets/report/shiftcatalogpage.cpp \
     mvc/catalog.cpp \
     mvc/comment.cpp \
-    backend/fileside.cpp
+    backend/fileside.cpp \
+    mvc/setting.cpp
 
 HEADERS  += mainwindow.h \
     backend/api.h \
@@ -125,7 +126,8 @@ HEADERS  += mainwindow.h \
     widgets/report/shiftcatalogpage.h \
     mvc/catalog.h \
     mvc/comment.h \
-    backend/fileside.h
+    backend/fileside.h \
+    mvc/setting.h
 
 FORMS    += mainwindow.ui \
     widgets/routeitemwidget.ui \

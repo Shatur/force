@@ -38,6 +38,9 @@ private:
 signals:
     void report(QString report);
     void report2(QString);
+
+    void needFileAction(QString);
+    void needSettingAction(QString);
 public slots:
 };
 

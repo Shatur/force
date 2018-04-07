@@ -4,14 +4,14 @@ import "../components"
 import "../Comment"
 Item{
     id: catalog
-    property real fontSize: 14
+    property real fontSize: Setting.getSetting("fontSize")
     property bool isReadOnly: Catalog.getReadOnlyFlag()
 
     property string colorFour: "#2980b9"
     property string keyboardType: "general"//for SettingPanel
-    property int indexCurrentItem: 0
+    property int indexCurrentItem: 0//активний ітем у каталозі на даний час
 
-    property string colorThree:"#002366"//активний ітем у каталозі на даний час
+    property string colorThree:"#002366"
     property string colorOne:"#eee"
     property string colorTwo:"#333"
     property string colorGreyA: "#666666"

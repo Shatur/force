@@ -72,41 +72,19 @@ bool Report::setup(int report_id, int shop_id, bool isReadOnly)
         commentModel->setComment(comments[i].time,
                                  comments[i].text,
                                  comments[i].isUnread);
-        //uiHelper.addWidgetToList(ui->commentsList, new ReportCommentsWidget(comments[i]));
     }
 
     Fesko::unreadComments()->flush();
 
-
-
-
-
    catalogModel = new Catalog;
    catalogModel->setReadOnlyFlag(read_only);//надалі согласовувати із сінглтоном
-
-//   QQuickView* view = new QQuickView;
-//   view->rootContext()->setContextProperty("Catalog", catalogModel);
-//   view->setSource(QUrl("qrc:/ui/qml/Catalog/CatalogView.qml"));
-//   view->show();
-
-
-   //QQuickView *view = new QQuickView();
-   //QWidget *container = QWidget::createWindowContainer(view);
-   //container->setMinimumSize(200, 200);
-   //container->setMaximumSize(500, 500);
-
-//   view->setSource(QUrl("qrc:/ui/qml/test.qml"));
-//   view->setResizeMode(QQuickView::SizeRootObjectToView);
-//    view->show();
-//    view->hide();
-//    view->show();
 
     ShiftCatalogPage* _shift = new ShiftCatalogPage;
     _shift->setCatalog(catalogModel);
     _shift->setComment(commentModel);
     ui->verticalLayout->addWidget(_shift);
-    //ui->stack->setCurrentIndex(1);
 
+    qDebug()<<QApplication::screens().size();
     connect(_shift,&ShiftCatalogPage::destroyed,[=]{
         catalogModel->deleteLater();
         commentModel->deleteLater();

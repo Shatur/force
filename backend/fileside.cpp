@@ -2,24 +2,54 @@
 
 FileSide::FileSide(QObject *parent) : QObject(parent)
 {
+
+    connect(&SingletonConnect::getInstance(),&SingletonConnect::needFileAction,
+            this, &FileSide::receiverSlot);//надає зв'язування із шиною обмінаданими
+
     qDebug()<<QDir::currentPath();
-    QFile file("test.txt");
+    settingFile.setFileName("setting");
 
-    if (file.open(QIODevice::WriteOnly))
+}
+void FileSide::settingRead()
+{
+    QString _s="";
+    if ((settingFile.exists())&&(settingFile.open(QIODevice::ReadOnly)))
     {
-        file.write("Test string\n");
-        file.write("Test string2");
-        file.close();
-    }
-
-    if ((file.exists())&&(file.open(QIODevice::ReadOnly)))
-    {
-        QString str="";
-        while(!file.atEnd())
+        while(!settingFile.atEnd())
         {
-            str=str+file.readLine();
+            _s=_s+settingFile.readLine();
         }
-        qDebug()<<str;
-        file.close();
+        settingFile.close();
+        emit SingletonConnect::getInstance().needSettingAction(_s);//ответ
     }
+    //читає із потрібного файла
+}
+
+void FileSide::settingWrite(QString a)
+{
+    QByteArray _ba;
+    _ba.append(a.split("?").last());
+
+    if (settingFile.open(QIODevice::WriteOnly))
+    {
+        settingFile.write(QByteArray(_ba));
+        settingFile.close();
+    }
+    //записує у потрібний файл
+}
+
+void FileSide::receiverSlot(QString a)
+{
+    if(a.contains("read"))
+        settingRead();
+    if(a.contains("write"))
+        settingWrite(a);
+    if (a.contains("Setting"))
+        settingWrite(a);
+    //функція приймаю запрос та адресує його
+}
+
+void FileSide::dataSave(QString a)
+{
+
 }

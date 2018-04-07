@@ -151,7 +151,8 @@ Item {
             fontSize = fontSize-1
         if (index === 3)
             fontSize = fontSize+1
-        //console.log(keyboardType)
+        Setting.setSetting("fontSize="+fontSize)
+
     }
 
     ListModel{

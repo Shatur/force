@@ -1,5 +1,5 @@
-#ifndef Catalog_H
-#define Catalog_H
+#ifndef CATALOG_H
+#define CATALOG_H
 
 #include <QAbstractListModel>
 #include <QDebug>
@@ -107,4 +107,4 @@ private:
 
 };
 
-#endif // Catalog_H
+#endif // CATALOG_H

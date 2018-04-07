@@ -22,18 +22,15 @@ QT_BEGIN_NAMESPACE
 class Ui_Report
 {
 public:
-    QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
 
     void setupUi(QWidget *Report)
     {
         if (Report->objectName().isEmpty())
             Report->setObjectName(QStringLiteral("Report"));
-        Report->resize(400, 600);
-        verticalLayoutWidget = new QWidget(Report);
-        verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 0, 401, 601));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        Report->resize(400, 400);
+        verticalLayout = new QVBoxLayout(Report);
+        verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
 

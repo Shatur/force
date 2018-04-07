@@ -6,6 +6,7 @@
 #include <QWidget>
 #include "mvc/catalog.h"
 #include "mvc/comment.h"
+#include "mvc/setting.h"
 
 namespace Ui {
 class ShiftCatalogPage;
@@ -25,6 +26,7 @@ public slots:
 private:
     Ui::ShiftCatalogPage *ui;
     QQuickItem *root;
+    Setting* setting;
 signals:
     void toComment(QString);
     void toAction(QString);
