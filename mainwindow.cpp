@@ -34,7 +34,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    qDebug()<<"main size"<<this->size();
 
 #if defined (Q_OS_ANDROID) || defined (Q_OS_IOS)
     QScreen *screen = QApplication::screens().at(0);
@@ -46,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setMaximumSize(screen_size);
 #endif
+
+
 
     qmlRegisterType<CamImageProcessor>("ImageProcessor", 1, 0, "ImageProcessor");
 

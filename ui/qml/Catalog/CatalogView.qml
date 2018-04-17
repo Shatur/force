@@ -75,6 +75,7 @@ Item{
     }
     Component.onCompleted: {
         listPick()
+       // console.log(300)
     }
 
     //DoubleEdit{id: doubleEditRoot}

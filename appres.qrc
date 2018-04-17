@@ -46,5 +46,7 @@
         <file>ui/art/settings.svg</file>
         <file>ui/qml/test.qml</file>
         <file>ui/art/syn.svg</file>
+        <file>ui/qml/Brand/BrandView.qml</file>
+        <file>ui/qml/Brand/Delegate.qml</file>
     </qresource>
 </RCC>

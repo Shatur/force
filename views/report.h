@@ -9,6 +9,7 @@
 #include "mvc/catalog.h"
 #include "mvc/comment.h"
 
+
 #include <QWidget>
 namespace Ui {
 class Report;
@@ -48,6 +49,7 @@ private:
     Fesko::SReport report;
 
     ReportPhotos* rp;
+
     Catalog* catalogModel;
     Comment* commentModel;
 };

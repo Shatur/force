@@ -378,13 +378,13 @@ int SQLDataProvider::doGetData(QString method, QUrlQuery params, QString &resp)
     if (params.toString().length())
         q.bindValue(":params", params.toString());
 
-    qDebug()<<params.toString();
     if (!q.exec())
     {
         qDebug()<<q.lastError().text();
         return ERR_DB_ERROR;
     }
 
+    qDebug()<<q.executedQuery();
     int resp_id = q.record().indexOf("response");
     if (resp_id <0 )
         return ERR_DB_ERROR;

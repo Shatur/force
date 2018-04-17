@@ -51,7 +51,7 @@ Item {
                         height: parent.height
                         width: parent.width
                         color: colorThree
-                        verticalAlignment: TextInput.AlignBottom
+                        verticalAlignment: TextInput.AlignVCenter
                         horizontalAlignment: TextInput.AlignHCenter
                         font.pixelSize: fontSize*2
                         font.italic: false

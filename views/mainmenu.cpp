@@ -75,9 +75,9 @@ void MainMenu::on_exitBtn_clicked()
 void MainMenu::on_reclamationBtn_clicked()
 {
     isReclamationsView = true;
-    Reclamations* r = new Reclamations(this);
-    r->setup(reclams);
-    views.push(r, this);
+    Reclamations* _r = new Reclamations(this);
+    _r->setup(reclams);
+    views.push(_r, this);
 }
 
 void MainMenu::on_syncButton_clicked()
@@ -133,7 +133,6 @@ void MainMenu::on_tasksBtn_clicked()
 void MainMenu::calculateReclamations()
 {
     Fesko::API.getReclamList(reclams);
-
     ui->reclamationBtn->setText(QString("Рекламації (%1/%2/%3)")
                                 .arg(reclams.curr.size())
                                 .arg(reclams.fixed.size())

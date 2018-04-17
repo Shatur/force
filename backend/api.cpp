@@ -371,6 +371,11 @@ int FreskoAPI::getReclamList(SReclamations& out)
     QJsonObject reclam = resp["reclam"].toObject();
 
     JSON_ARRAY(reclam, curr, "curr");
+
+    QDate firstDay;//відсіює занадто давні рекламації
+    firstDay = QDate::currentDate();
+    firstDay = firstDay.addDays(-5);//давність N днів
+
     for(int i=0; i<curr.size(); i++)
     {
         SReclamation entry;
@@ -378,6 +383,8 @@ int FreskoAPI::getReclamList(SReclamations& out)
         QJsonObject el = curr[i].toObject();
         JSON_FIELD_REQIRED(el, "report", entry.report).toString().toInt();
         JSON_FIELD_REQIRED(el, "date", tmp).toString();
+        if(firstDay > QDate::fromString(tmp,"yyyy-MM-dd"))
+            continue;
         entry.date = QDate::fromString(tmp, "yyyy-MM-dd");
         JSON_FIELD_REQIRED(el, "shop", entry.shop).toString();
         JSON_FIELD_REQIRED(el, "adress", entry.adress).toString();
@@ -396,6 +403,8 @@ int FreskoAPI::getReclamList(SReclamations& out)
         QJsonObject el = fixed[i].toObject();
         JSON_FIELD_REQIRED(el, "report", entry.report).toInt();
         JSON_FIELD_REQIRED(el, "date", tmp).toString();
+        if(firstDay > QDate::fromString(tmp,"yyyy-MM-dd"))
+            continue;
         entry.date = QDate::fromString(tmp, "yyyy-MM-dd");
         JSON_FIELD_REQIRED(el, "shop", entry.shop).toString();
         JSON_FIELD_REQIRED(el, "adress", entry.adress).toString();
@@ -414,6 +423,8 @@ int FreskoAPI::getReclamList(SReclamations& out)
         QJsonObject el = final[i].toObject();
         JSON_FIELD_REQIRED(el, "report", entry.report).toInt();
         JSON_FIELD_REQIRED(el, "date", tmp).toString();
+        if(firstDay > QDate::fromString(tmp,"yyyy-MM-dd"))
+            continue;
         entry.date = QDate::fromString(tmp, "yyyy-MM-dd");
         JSON_FIELD_REQIRED(el, "shop", entry.shop).toString();
         JSON_FIELD_REQIRED(el, "adress", entry.adress).toString();

@@ -7,6 +7,7 @@
 #include "backend/api.h"
 #include "views/mainmenu.h"
 
+
 namespace Ui {
 class MainWindow;
 }
@@ -21,6 +22,7 @@ public:
 
     void doLogin(QWidget* nextWidget = 0, QString message = QString());
     virtual void resizeEvent(QResizeEvent *event);
+
 
     int performLogin();
 

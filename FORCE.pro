@@ -76,7 +76,8 @@ SOURCES += main.cpp\
     mvc/catalog.cpp \
     mvc/comment.cpp \
     backend/fileside.cpp \
-    mvc/setting.cpp
+    mvc/setting.cpp \
+    mvc/qmlenvironment.cpp
 
 HEADERS  += mainwindow.h \
     backend/api.h \
@@ -127,7 +128,8 @@ HEADERS  += mainwindow.h \
     mvc/catalog.h \
     mvc/comment.h \
     backend/fileside.h \
-    mvc/setting.h
+    mvc/setting.h \
+    mvc/qmlenvironment.h
 
 FORMS    += mainwindow.ui \
     widgets/routeitemwidget.ui \
@@ -180,6 +182,7 @@ DISTFILES += \
     android/gradlew \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat \
-    ui/qml/test.qml
+    ui/qml/test.qml \
+    ui/qml/Brand/BrandView.qml
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

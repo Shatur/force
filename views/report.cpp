@@ -64,7 +64,6 @@ bool Report::setup(int report_id, int shop_id, bool isReadOnly)
         return false;
     }
     Fesko::sql_provider()->mergeComments(report.id, comments);
-
     commentModel = new Comment;
     commentModel->setReportId(id);
     for(int i=0; i<comments.size(); i++)
@@ -76,6 +75,7 @@ bool Report::setup(int report_id, int shop_id, bool isReadOnly)
 
     Fesko::unreadComments()->flush();
 
+
    catalogModel = new Catalog;
    catalogModel->setReadOnlyFlag(read_only);//надалі согласовувати із сінглтоном
 
@@ -83,8 +83,6 @@ bool Report::setup(int report_id, int shop_id, bool isReadOnly)
     _shift->setCatalog(catalogModel);
     _shift->setComment(commentModel);
     ui->verticalLayout->addWidget(_shift);
-
-    qDebug()<<QApplication::screens().size();
     connect(_shift,&ShiftCatalogPage::destroyed,[=]{
         catalogModel->deleteLater();
         commentModel->deleteLater();
@@ -97,7 +95,6 @@ bool Report::setup(int report_id, int shop_id, bool isReadOnly)
             on_makePhotoBtn_clicked();
         if(a.contains("push"))
             on_makeReportBtn_clicked();
-        qDebug()<<a;
     });
     return true;
 }
