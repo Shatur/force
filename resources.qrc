@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pics/logo_2.png</file>
+        <file>pics/original/achievement_ico.png</file>
+        <file>pics/original/task_ico.png</file>
+        <file>pics/original/route_ico.png</file>
+        <file>pics/original/bad_route_ico.png</file>
+        <file>pics/original/event_ico.png</file>
+        <file>pics/app_icon.png</file>
+        <file>pics/original/user_ico.jpg</file>
+        <file>pics/original/lines_ico.png</file>
+        <file>pics/original/logout_ico.png</file>
+        <file>pics/waiting.png</file>
+        <file>pics/error.png</file>
+        <file>pics/downloading.png</file>
+        <file>pics/camera-shot.png</file>
+        <file>pics/original/comment_ico.png</file>
+        <file>pics/sync.png</file>
+        <file>pics/uploading.png</file>
+        <file>pics/original/user_ico_small.jpg</file>
+        <file>pics/flash.png</file>
+        <file>pics/flash-auto.png</file>
+        <file>pics/flash-off.png</file>
+        <file>pics/view_report.png</file>
+        <file>pics/logo_3.png</file>
+        <file>pics/original/settings1_ico.png</file>
+        <file>qml/qmlcamera.qml</file>
+        <file>qml/Catalog/CatalogView.qml</file>
+        <file>qml/Catalog/Delegate.qml</file>
+        <file>qml/Catalog/Header.qml</file>
+        <file>qml/components/DoubleEdit.qml</file>
+        <file>qml/components/PressBox.qml</file>
+        <file>qml/components/SettingPanel.qml</file>
+        <file>pics/cogwheel.png</file>
+        <file>createdb.sql</file>
+    </qresource>
+</RCC>

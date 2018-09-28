@@ -4,176 +4,147 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network sql positioning location multimedia quickwidgets sensors
-#multimediawidgets
+QT += core gui network sql positioning location multimedia quickwidgets sensors
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = FORCE
 TEMPLATE = app
-
-#DEFINES += "SVN_REV=\"\\\"$$system(svnversion -n)\\\"\""
-
-top_srcdir=$$PWD
-ver_file = $$top_srcdir/version.h
-
-#versionTarget.target = version.h
-#versionTarget.depends = FORCE
-#win32
-#{
-#versionTarget.commands = type NUL >> "$$ver_file"
-#}
-#!win32 {
-#versionTarget.commands = touch "$$ver_file"
-#}
-#PRE_TARGETDEPS += version.h
-#QMAKE_EXTRA_TARGETS += versionTarget
-
 CONFIG += console c++11
+INCLUDEPATH += $$PWD/src
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    backend/api.cpp \
-    widgets/pixmaplabel.cpp \
-    widgets/routeitemwidget.cpp \
-    backend/sitedataprovider.cpp \
-    backend/dataprovider.cpp \
-    backend/sqldataprovider.cpp \
-    viewmanager.cpp \
-    views/mainmenu.cpp \
-    views/showroute.cpp \
-    views/selectbrand.cpp \
-    views/events.cpp \
-    widgets/eventitemwidget.cpp \
-    gps.cpp \
-    views/report.cpp \
-    uihelper.cpp \
-    views/errordialog.cpp \
-    views/reportphotos.cpp \
-    widgets/reportphotowidget.cpp \
-    camera/cam_imgpreocessor.cpp \
-    widgets/qmlcamwidget.cpp \
-    widgets/report/catalogpage.cpp \
-    widgets/report/reportitem.cpp \
-    widgets/report/cataloglistitem.cpp \
-    widgets/report/cataloglegend.cpp \
-    views/reclamations.cpp \
-    widgets/reclamation.cpp \
-    views/sync.cpp \
-    backend/jsondata.cpp \
-    backend/fakedataprovider.cpp \
-    widgets/allcommentswidget.cpp \
-    views/comments.cpp \
-    widgets/report/reportcommentswidget.cpp \
-    views/tasks.cpp \
-    widgets/task.cpp \
-    backend/unreadcomments.cpp \
-    views/archivments.cpp \
-    widgets/archivment.cpp \
-    views/settings.cpp \
-    mvc/modelcatalog.cpp \
-    backend/singletonconnect.cpp \
-    widgets/report/shiftcatalogpage.cpp
+SOURCES += \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/backend/api.cpp \
+    src/widgets/pixmaplabel.cpp \
+    src/widgets/routeitemwidget.cpp \
+    src/backend/sitedataprovider.cpp \
+    src/backend/dataprovider.cpp \
+    src/backend/sqldataprovider.cpp \
+    src/viewmanager.cpp \
+    src/views/mainmenu.cpp \
+    src/views/showroute.cpp \
+    src/views/selectbrand.cpp \
+    src/views/events.cpp \
+    src/widgets/eventitemwidget.cpp \
+    src/gps.cpp \
+    src/views/report.cpp \
+    src/uihelper.cpp \
+    src/views/errordialog.cpp \
+    src/views/reportphotos.cpp \
+    src/widgets/reportphotowidget.cpp \
+    src/camera/cam_imgpreocessor.cpp \
+    src/widgets/qmlcamwidget.cpp \
+    src/widgets/report/catalogpage.cpp \
+    src/widgets/report/reportitem.cpp \
+    src/widgets/report/cataloglistitem.cpp \
+    src/widgets/report/cataloglegend.cpp \
+    src/views/reclamations.cpp \
+    src/widgets/reclamation.cpp \
+    src/views/sync.cpp \
+    src/backend/jsondata.cpp \
+    src/backend/fakedataprovider.cpp \
+    src/widgets/allcommentswidget.cpp \
+    src/views/comments.cpp \
+    src/widgets/report/reportcommentswidget.cpp \
+    src/views/tasks.cpp \
+    src/widgets/task.cpp \
+    src/backend/unreadcomments.cpp \
+    src/views/archivments.cpp \
+    src/widgets/archivment.cpp \
+    src/views/settings.cpp \
+    src/mvc/modelcatalog.cpp \
+    src/backend/singletonconnect.cpp \
+    src/widgets/report/shiftcatalogpage.cpp
 
-HEADERS  += mainwindow.h \
-    backend/api.h \
-    common.h \
-    widgets/pixmaplabel.h \
-    widgets/routeitemwidget.h \
-    backend/dataprovider.h \
-    backend/sitedataprovider.h \
-    backend/datacache.h \
-    backend/datatypes.h \
-    backend/sqldataprovider.h \
-    viewmanager.h \
-    views/mainmenu.h \
-    views/showroute.h \
-    views/selectbrand.h \
-    views/events.h \
-    widgets/eventitemwidget.h \
-    gps.h \
-    views/report.h \
-    uihelper.h \
-    views/errordialog.h \
-    views/reportphotos.h \
-    widgets/reportphotowidget.h \
-    camera/cam_imgpreocessor.h \
-    widgets/qmlcamwidget.h \
-    widgets/report/catalogpage.h \
-    widgets/report/reportitem.h \
-    widgets/report/cataloglistitem.h \
-    widgets/report/cataloglegend.h \
-    views/reclamations.h \
-    widgets/reclamation.h \
-    views/sync.h \
-    backend/jsondata.h \
-    backend/fakedataprovider.h \
-    $$ver_file \
-    widgets/allcommentswidget.h \
-    views/comments.h \
-    widgets/report/reportcommentswidget.h \
-    app_features.h \
-    views/tasks.h \
-    widgets/task.h \
-    backend/unreadcomments.h \
-    views/archivments.h \
-    widgets/archivment.h \
-    views/settings.h \
-    mvc/modelcatalog.h \
-    backend/singletonconnect.h \
-    widgets/report/shiftcatalogpage.h
+HEADERS += \
+    src/mainwindow.h \
+    src/version.h \
+    src/backend/api.h \
+    src/common.h \
+    src/widgets/pixmaplabel.h \
+    src/widgets/routeitemwidget.h \
+    src/backend/dataprovider.h \
+    src/backend/sitedataprovider.h \
+    src/backend/datacache.h \
+    src/backend/datatypes.h \
+    src/backend/sqldataprovider.h \
+    src/viewmanager.h \
+    src/views/mainmenu.h \
+    src/views/showroute.h \
+    src/views/selectbrand.h \
+    src/views/events.h \
+    src/widgets/eventitemwidget.h \
+    src/gps.h \
+    src/views/report.h \
+    src/uihelper.h \
+    src/views/errordialog.h \
+    src/views/reportphotos.h \
+    src/widgets/reportphotowidget.h \
+    src/camera/cam_imgpreocessor.h \
+    src/widgets/qmlcamwidget.h \
+    src/widgets/report/catalogpage.h \
+    src/widgets/report/reportitem.h \
+    src/widgets/report/cataloglistitem.h \
+    src/widgets/report/cataloglegend.h \
+    src/views/reclamations.h \
+    src/widgets/reclamation.h \
+    src/views/sync.h \
+    src/backend/jsondata.h \
+    src/backend/fakedataprovider.h \
+    src/widgets/allcommentswidget.h \
+    src/views/comments.h \
+    src/widgets/report/reportcommentswidget.h \
+    src/app_features.h \
+    src/views/tasks.h \
+    src/widgets/task.h \
+    src/backend/unreadcomments.h \
+    src/views/archivments.h \
+    src/widgets/archivment.h \
+    src/views/settings.h \
+    src/mvc/modelcatalog.h \
+    src/backend/singletonconnect.h \
+    src/widgets/report/shiftcatalogpage.h
 
-FORMS    += mainwindow.ui \
-    widgets/routeitemwidget.ui \
-    views/mainmenu.ui \
-    views/showroute.ui \
-    views/selectbrand.ui \
-    views/events.ui \
-    widgets/eventitemwidget.ui \
-    views/report.ui \
-    views/errordialog.ui \
-    views/reportphotos.ui \
-    widgets/reportphotowidget.ui \
-    widgets/qmlcamwidget.ui \
-    widgets/report/catalogpage.ui \
-    widgets/report/reportitem.ui \
-    widgets/report/cataloglistitem.ui \
-    widgets/report/cataloglegend.ui \
-    views/reclamations.ui \
-    widgets/reclamation.ui \
-    views/sync.ui \
-    widgets/allcommentswidget.ui \
-    views/comments.ui \
-    widgets/report/reportcommentswidget.ui \
-    views/tasks.ui \
-    widgets/task.ui \
-    views/archivments.ui \
-    widgets/archivment.ui \
-    views/settings.ui \
-    widgets/report/shiftcatalogpage.ui
+FORMS += \
+    src/mainwindow.ui \
+    src/widgets/routeitemwidget.ui \
+    src/views/mainmenu.ui \
+    src/views/showroute.ui \
+    src/views/selectbrand.ui \
+    src/views/events.ui \
+    src/widgets/eventitemwidget.ui \
+    src/views/report.ui \
+    src/views/errordialog.ui \
+    src/views/reportphotos.ui \
+    src/widgets/reportphotowidget.ui \
+    src/widgets/qmlcamwidget.ui \
+    src/widgets/report/catalogpage.ui \
+    src/widgets/report/reportitem.ui \
+    src/widgets/report/cataloglistitem.ui \
+    src/widgets/report/cataloglegend.ui \
+    src/views/reclamations.ui \
+    src/widgets/reclamation.ui \
+    src/views/sync.ui \
+    src/widgets/allcommentswidget.ui \
+    src/views/comments.ui \
+    src/widgets/report/reportcommentswidget.ui \
+    src/views/tasks.ui \
+    src/widgets/task.ui \
+    src/views/archivments.ui \
+    src/widgets/archivment.ui \
+    src/views/settings.ui \
+    src/widgets/report/shiftcatalogpage.ui
 
 RESOURCES += \
-    appres.qrc
+    resources.qrc
 
-
-DISTFILES += \
-    android/AndroidManifest.xml \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradlew \
-    android/res/values/libs.xml \
-    android/build.gradle \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat \
-    android/AndroidManifest.xml \
-    android/res/values/libs.xml \
-    android/build.gradle \
-    backend/createdb.sql \
-    camera/qmlcamera.qml \
-    pics/view_report.png \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradlew \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat \
-    ui/qml/test.qml
-
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+OTHER_FILES = \
+    qml/qmlcamera.qml \
+    qml/Catalog/CatalogView.qml \
+    qml/Catalog/Delegate.qml \
+    qml/Catalog/Header.qml \
+    qml/components/DoubleEdit.qml \
+    qml/components/PressBox.qml \
+    qml/components/SettingPanel.qml \
