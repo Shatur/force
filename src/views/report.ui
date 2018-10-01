@@ -92,7 +92,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
           <string>Повідомлення</string>
          </property>
          <property name="icon">
-          <iconset resource="../appres.qrc">
+          <iconset resource="../../resources.qrc">
            <normaloff>:/pics/original/comment_ico.png</normaloff>:/pics/original/comment_ico.png</iconset>
          </property>
         </item>
@@ -247,7 +247,7 @@ color: rgb(255, 255, 255);</string>
   </layout>
  </widget>
  <resources>
-  <include location="../appres.qrc"/>
+  <include location="../../resources.qrc"/>
  </resources>
  <connections/>
 </ui>

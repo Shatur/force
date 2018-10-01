@@ -69,7 +69,7 @@
         <string>Увійти у ТТ</string>
        </property>
        <property name="icon">
-        <iconset resource="../appres.qrc">
+        <iconset resource="../../resources.qrc">
          <normaloff>:/pics/original/route_ico.png</normaloff>:/pics/original/route_ico.png</iconset>
        </property>
        <property name="iconSize">
@@ -92,7 +92,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../appres.qrc"/>
+  <include location="../../resources.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -54,7 +54,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../appres.qrc">:/pics/logo_3.png</pixmap>
+         <pixmap resource="../../resources.qrc">:/pics/logo_3.png</pixmap>
         </property>
        </widget>
       </item>
@@ -106,7 +106,7 @@ background-color: rgb(0, 0, 127);*/</string>
          <string>Маршрути</string>
         </property>
         <property name="icon">
-         <iconset resource="../appres.qrc">
+         <iconset resource="../../resources.qrc">
           <normaloff>:/pics/original/route_ico.png</normaloff>:/pics/original/route_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -129,7 +129,7 @@ background-color: rgb(0, 0, 127);*/</string>
          <string>Задачі</string>
         </property>
         <property name="icon">
-         <iconset resource="../appres.qrc">
+         <iconset resource="../../resources.qrc">
           <normaloff>:/pics/original/task_ico.png</normaloff>:/pics/original/task_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -155,7 +155,7 @@ background-color: rgb(0, 0, 127);*/</string>
          <string>Рекламації</string>
         </property>
         <property name="icon">
-         <iconset resource="../appres.qrc">
+         <iconset resource="../../resources.qrc">
           <normaloff>:/pics/original/bad_route_ico.png</normaloff>:/pics/original/bad_route_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -185,7 +185,7 @@ background-color: rgb(0, 0, 127);*/</string>
          <string>Події</string>
         </property>
         <property name="icon">
-         <iconset resource="../appres.qrc">
+         <iconset resource="../../resources.qrc">
           <normaloff>:/pics/original/event_ico.png</normaloff>:/pics/original/event_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -211,7 +211,7 @@ background-color: rgb(0, 0, 127);*/</string>
          <string>Досягнення</string>
         </property>
         <property name="icon">
-         <iconset resource="../appres.qrc">
+         <iconset resource="../../resources.qrc">
           <normaloff>:/pics/original/achievement_ico.png</normaloff>:/pics/original/achievement_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -234,7 +234,7 @@ background-color: rgb(0, 0, 127);*/</string>
          <string>Коментарі</string>
         </property>
         <property name="icon">
-         <iconset resource="../appres.qrc">
+         <iconset resource="../../resources.qrc">
           <normaloff>:/pics/original/comment_ico.png</normaloff>:/pics/original/comment_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -264,7 +264,7 @@ background-color: rgb(0, 0, 127);*/</string>
          <string>Налаштування</string>
         </property>
         <property name="icon">
-         <iconset resource="../appres.qrc">
+         <iconset resource="../../resources.qrc">
           <normaloff>:/pics/original/settings1_ico.png</normaloff>:/pics/original/settings1_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -287,7 +287,7 @@ background-color: rgb(0, 0, 127);*/</string>
          <string>Синхронізувати</string>
         </property>
         <property name="icon">
-         <iconset resource="../appres.qrc">
+         <iconset resource="../../resources.qrc">
           <normaloff>:/pics/sync.png</normaloff>:/pics/sync.png</iconset>
         </property>
         <property name="iconSize">
@@ -317,7 +317,7 @@ background-color: rgb(0, 0, 127);*/</string>
          <string>Вийти</string>
         </property>
         <property name="icon">
-         <iconset resource="../appres.qrc">
+         <iconset resource="../../resources.qrc">
           <normaloff>:/pics/original/logout_ico.png</normaloff>:/pics/original/logout_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -348,7 +348,7 @@ background-color: rgb(0, 0, 127);*/</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../appres.qrc"/>
+  <include location="../../resources.qrc"/>
  </resources>
  <connections/>
 </ui>
