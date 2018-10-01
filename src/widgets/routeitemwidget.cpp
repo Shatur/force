@@ -81,38 +81,33 @@ void RouteItemWidget::on_doReportBtn_clicked()//перевірка за меж �
 {
     int dist = gps::ref().distanceTo(data.pos_alt, data.pos_long);
 
+#ifndef DISABLE_GPS_RULE
     if (!isReadOnly)
     {
-        if (dist<0)
-        {
+        if (dist < 0) {
             QMessageBox msgBox;
             msgBox.setText("Поточні координати недоступні або застарілі\n Увімкніть GPS\nЗвіт буде відкрито лише для перегляду");
             msgBox.setStandardButtons(QMessageBox::Ok);
             msgBox.exec();
-#ifndef DISABLE_GPS_RULE
-            isReadOnly = true;//hot point
-#endif
-        }
-        else
-        if (dist>MAX_DISTANCE)
-        {
+            isReadOnly = true;
+        } else if (dist>MAX_DISTANCE) {
             QMessageBox msgBox;
             QString msg = QString("Ви знаходитеся занадто далеко від місця призначення %1\nЗвіт буде відкрито лише для перегляду").arg(dist);
             msgBox.setText(msg);
             msgBox.setStandardButtons(QMessageBox::Ok);
             msgBox.exec();
-#ifndef DISABLE_GPS_RULE
-            isReadOnly = true;//hot point toooooooooo
-#endif
+            isReadOnly = true;
         }
     }
+#endif
 
     setCameraImgText(QString("%1:%2").arg(QString::number(data.pos_alt))
                                      .arg(QString::number(data.pos_long)));
 
-    SelectBrand* wgt = new SelectBrand(NULL);
+    auto* wgt = new SelectBrand(nullptr);
 
     if (wgt->setup(data.date, data.id, isReadOnly))
         views.push(wgt);
-    else delete wgt;
+    else
+        delete wgt;
 }
