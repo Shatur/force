@@ -148,3 +148,10 @@ OTHER_FILES = \
     qml/components/DoubleEdit.qml \
     qml/components/PressBox.qml \
     qml/components/SettingPanel.qml \
+
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/res/values/libs.xml \
+    android/build.gradle
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
