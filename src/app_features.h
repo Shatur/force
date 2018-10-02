@@ -4,7 +4,7 @@
 //#define TRIAL_VERSION
 //#define TEST_BASE
 //#define DISABLE_REPORT_EDIT_DATE
-//#define DISABLE_GPS_RULE
+#define DISABLE_GPS_RULE
 //#define DISABLE_CACHE
 //#define DIMA_DEBUG
 //#define SHOW_CAM_AT_STARTUP

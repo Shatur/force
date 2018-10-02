@@ -50,8 +50,6 @@ int SiteDataProvider::doLogin(QString login, QString password)
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(string_resp.toUtf8());
     resp = jsonResponse.object();
-    qDebug()<<12345;
-    qDebug()<<resp;
 
     if (resp.contains("token"))
     {
@@ -113,19 +111,17 @@ int SiteDataProvider::makePOST(QString script_file, QUrlQuery params, SApiBinary
     if (!data)
         req+="Content-Type: application/x-www-form-urlencoded\r\n";
     else
-        req+=QString("Content-Type: multipart/form-data; boundary=")+boundary+"\r\n";
+        req+=QString("Content-Type: multipart/form-data; boundary=--")+boundary+"\r\n";
     //req+="enctype=\"multipart/form-data\"\r\n";
     req+="\r\n";
 
-    ///req+=reqq;
+    //req+=reqq;
 
     QByteArray toSend(req.toUtf8());
     toSend.append(reqq);
 
 
-    qDebug()<<"Request: ===";
-    qDebug()<<toSend;
-    qDebug()<<"----------------";
+    qDebug() << "Request: " << toSend;
 
     socket.write(toSend);
 
@@ -145,9 +141,7 @@ int SiteDataProvider::makePOST(QString script_file, QUrlQuery params, SApiBinary
     int idx = response.indexOf("\r\n\r\n");
     response = response.right(response.length() - idx);
 
-    qDebug()<<"RESPONSE: ===";
-    qDebug()<<response;
-    qDebug()<<"\n\n======================\n";
+    qDebug() << "Response: " << response;
 
     resp = response;
 
