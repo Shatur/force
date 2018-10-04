@@ -32,7 +32,6 @@
         <file>ui/art/back.png</file>
         <file>ui/qml/components/PressBox.qml</file>
         <file>ui/qml/components/SettingPanel.qml</file>
-        <file>../newui/newui.pro.user</file>
         <file>ui/art/cogwheel.png</file>
         <file>ui/qml/components/DoubleEdit.qml</file>
         <file>ui/qml/Catalog/DelegateComponents/LineThree.qml</file>
